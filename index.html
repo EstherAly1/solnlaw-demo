@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>solnlaw ai — Justice Reimagined with AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#0a1628;--ink2:#1e3360;--gold:#f5c842;--gold2:#e6b820;
+  --cream:#f7f5f0;--muted:#8a8fa8;
+  --border:rgba(10,22,40,0.10);--border2:rgba(10,22,40,0.18);
+}
+
+/* ════════════════════════════════════════
+   LIGHT MODE — matches portal palette exactly
+   Activated by body.lm class
+════════════════════════════════════════ */
+
+/* ── Landing page ── */
+body.lm{background:#f0f2f7;color:#0a1628;}
+body.lm .hero{background:#ffffff;}
+body.lm .hero h1{color:#0a1628;}
+body.lm .hero h1 em{color:#1e3360;}
+body.lm .hero-sub{color:#6b7280;}
+body.lm .hero-badge{border-color:rgba(10,22,40,0.14);color:#8a8fa8;}
+body.lm .btn-outline{color:#0a1628;border-color:rgba(10,22,40,0.2);}
+body.lm .btn-outline:hover{border-color:#0a1628;}
+body.lm .hero-trust{color:rgba(10,22,40,0.35);}
+body.lm .hero-trust b{color:#0a1628;}
+/* Nav Login button in light mode */
+body.lm .nav-links a[onclick="openPortalLogin()"]{color:rgba(10,22,40,0.8)!important;border-color:rgba(10,22,40,0.25)!important;}
+body.lm .nav-links a[onclick="openPortalLogin()"]:hover{color:#0a1628!important;border-color:#0a1628!important;}
+body.lm .section-title{color:#0a1628;}
+body.lm .section-sub{color:#6b7280;}
+body.lm .section-eyebrow{color:#8a8fa8;}
+body.lm .section-divider{background:var(--gold);}
+
+/* ── Dashboard ── */
+body.lm #dash{background:#f0f2f7;}
+body.lm .dash-nav{background:#ffffff;border-bottom-color:rgba(10,22,40,0.09);}
+body.lm .dash-logo .soln{color:#0a1628;}
+body.lm .dash-logo .ai{color:rgba(10,22,40,0.3);}
+body.lm .dash-greeting{color:rgba(10,22,40,0.5);}
+body.lm .dash-h1{color:#0a1628;}
+body.lm .dash-h1 em{color:rgba(10,22,40,0.4);}
+body.lm .dash-sub{color:rgba(10,22,40,0.5);}
+body.lm .dash-ey{color:rgba(10,22,40,0.35);}
+body.lm .dash-stit{color:#0a1628;}
+body.lm .dash-sign-out{border-color:rgba(10,22,40,0.18);color:rgba(10,22,40,0.5);}
+body.lm .dash-sign-out:hover{border-color:rgba(10,22,40,0.4);color:#0a1628;}
+body.lm .dash-avatar{background:rgba(245,200,66,0.2);border-color:rgba(245,200,66,0.5);}
+body.lm .dash-welcome-badge{background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.25);}
+
+/* ── Form modals — overlay backdrops ── */
+body.lm #d8-overlay.visible,
+body.lm #reg-overlay.visible,
+body.lm #n1-overlay.visible,
+body.lm #in01-overlay.visible{background:rgba(220,224,235,0.97)!important;}
+
+/* ── Form modal panels — main bg ── */
+body.lm #d8-modal,
+body.lm #n1-modal,
+body.lm #in01-modal,
+body.lm #reg-modal{background:#ffffff!important;}
+
+/* ── Form header (sticky bar) ── */
+body.lm .fh,body.lm .rh{background:#ffffff!important;border-bottom-color:rgba(10,22,40,0.09)!important;}
+body.lm .flogo .soln,body.lm .rh-logo .soln{color:#0a1628!important;}
+body.lm .flogo .law,body.lm .rh-logo .law{color:var(--gold)!important;}
+body.lm .flogo .ai,body.lm .rh-logo .ai{color:rgba(10,22,40,0.3)!important;}
+body.lm .fstep,body.lm .rh-label{color:rgba(10,22,40,0.4)!important;}
+body.lm .fstep span{color:var(--gold)!important;}
+body.lm .fclose,body.lm .rclose{border-color:rgba(10,22,40,0.15)!important;color:rgba(10,22,40,0.45)!important;background:transparent!important;}
+body.lm .fclose:hover,body.lm .rclose:hover{color:#0a1628!important;background:rgba(10,22,40,0.04)!important;}
+
+/* ── Progress bar track ── */
+body.lm .fprog{background:rgba(10,22,40,0.08)!important;}
+
+/* ── Form body ── */
+body.lm .fbody,body.lm .rbody{background:#ffffff!important;}
+
+/* ── Step eyebrow, title, subtitle ── */
+body.lm .ey,body.lm .reyebrow{color:rgba(10,22,40,0.35)!important;}
+body.lm .ttl,body.lm .rtitle{color:#0a1628!important;}
+body.lm .ttl em,body.lm .rtitle em{font-style:italic;}
+body.lm .sub,body.lm .rsub{color:rgba(10,22,40,0.5)!important;}
+
+/* ── Field labels ── */
+body.lm .field label,body.lm .flabel{color:rgba(10,22,40,0.5)!important;}
+
+/* ── Inputs, selects, textareas ── */
+body.lm .field input,
+body.lm .field select,
+body.lm .field textarea,
+body.lm .pc-row input,
+body.lm textarea{
+  background:#f5f7fb!important;
+  border-color:rgba(10,22,40,0.14)!important;
+  color:#0a1628!important;
+}
+body.lm .field input::placeholder,
+body.lm .field textarea::placeholder,
+body.lm textarea::placeholder,
+body.lm .pc-row input::placeholder{color:rgba(10,22,40,0.3)!important;}
+body.lm .field input:focus,
+body.lm .field select:focus,
+body.lm .field textarea:focus,
+body.lm .pc-row input:focus,
+body.lm textarea:focus{border-color:rgba(245,200,66,0.6)!important;}
+body.lm .field select option{background:#f0f2f7!important;color:#0a1628!important;}
+body.lm .field input.ERR,body.lm .field select.ERR{border-color:rgba(210,60,40,0.6)!important;}
+
+/* ── Password show/hide toggle ── */
+body.lm .pw-toggle{color:rgba(10,22,40,0.35)!important;}
+body.lm .pw-bar{background:rgba(10,22,40,0.1)!important;}
+
+/* ── Choice cards ── */
+body.lm .choice{background:#f5f7fb!important;border-color:rgba(10,22,40,0.1)!important;}
+body.lm .choice:hover{background:#eef0f6!important;border-color:rgba(10,22,40,0.2)!important;}
+body.lm .choice.on{background:rgba(245,200,66,0.1)!important;border-color:rgba(245,200,66,0.5)!important;}
+body.lm .choice.greyed{opacity:0.3!important;}
+body.lm .ct{color:#0a1628!important;}
+body.lm .cs{color:rgba(10,22,40,0.5)!important;}
+
+/* ── Info/warning/ok boxes ── */
+body.lm .ibox{background:rgba(245,200,66,0.07)!important;border-color:rgba(245,200,66,0.25)!important;color:rgba(10,22,40,0.6)!important;}
+body.lm .ibox strong{color:rgba(180,140,0,0.9)!important;}
+body.lm .wbox{background:rgba(210,50,30,0.06)!important;border-color:rgba(210,50,30,0.2)!important;color:#9b2510!important;}
+body.lm .wbox strong{color:#b02c10!important;}
+body.lm .wbox .hl{color:var(--gold2)!important;}
+body.lm .okbox{background:rgba(30,150,80,0.07)!important;border-color:rgba(30,150,80,0.2)!important;color:#1a6e3a!important;}
+
+/* ── Checkbox rows ── */
+body.lm .cbx{background:#f5f7fb!important;border-color:rgba(10,22,40,0.1)!important;}
+body.lm .cbx:hover{border-color:rgba(10,22,40,0.2)!important;}
+body.lm .cbx.on{background:rgba(245,200,66,0.08)!important;border-color:rgba(245,200,66,0.4)!important;}
+body.lm .cbx span{color:rgba(10,22,40,0.7)!important;}
+
+/* ── JCK (jurisdiction checkbox) rows ── */
+body.lm .jck span{color:rgba(10,22,40,0.7)!important;}
+body.lm .jck:hover{background:rgba(10,22,40,0.03)!important;}
+
+/* ── Postcode finder ── */
+body.lm .pc-list{background:#f5f7fb!important;border-color:rgba(10,22,40,0.1)!important;}
+body.lm .pc-item{color:rgba(10,22,40,0.75)!important;border-bottom-color:rgba(10,22,40,0.06)!important;}
+body.lm .pc-item:hover{background:rgba(245,200,66,0.07)!important;}
+body.lm .pc-hint{color:rgba(10,22,40,0.35)!important;}
+body.lm .pc-btn{background:rgba(245,200,66,0.12)!important;border-color:rgba(245,200,66,0.3)!important;}
+
+/* ── Review section ── */
+body.lm .rev-lbl{color:rgba(10,22,40,0.4)!important;border-bottom-color:rgba(10,22,40,0.1)!important;}
+body.lm .rev-row{border-bottom-color:rgba(10,22,40,0.06)!important;}
+body.lm .rk{color:rgba(10,22,40,0.45)!important;}
+body.lm .rv{color:#0a1628!important;}
+body.lm .rev-sec{background:transparent!important;}
+
+/* ── Error messages ── */
+body.lm .em{color:rgba(200,40,20,0.9)!important;}
+
+/* ── Nav buttons (Back / Continue / Submit) ── */
+body.lm .bbk{background:transparent!important;border-color:rgba(10,22,40,0.22)!important;color:rgba(10,22,40,0.6)!important;}
+body.lm .bbk:hover{border-color:#0a1628!important;color:#0a1628!important;}
+/* bnx and bsub stay gold — fine as-is */
+
+/* ── Prefill badge ── */
+body.lm .prefill-badge{color:var(--gold2)!important;}
+
+/* ── Registration form extras ── */
+body.lm #reg-modal .auth-divider-line{background:rgba(10,22,40,0.1)!important;}
+body.lm .pw-strength .pw-bar{background:rgba(10,22,40,0.1)!important;}
+
+/* ── Theme FAB ── */
+#theme-fab{
+  position:fixed;bottom:28px;right:28px;z-index:99999;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--gold);color:var(--ink);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+  transition:transform 0.2s,box-shadow 0.2s,background 0.3s;
+  font-family:'DM Sans',sans-serif;
+}
+#theme-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(0,0,0,0.35);}
+#theme-fab svg{transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),opacity 0.2s;}
+#theme-fab .fab-sun{position:absolute;}
+#theme-fab .fab-moon{position:absolute;}
+body:not(.lm) #theme-fab .fab-sun{opacity:0;transform:rotate(90deg) scale(0.5);}
+body:not(.lm) #theme-fab .fab-moon{opacity:1;transform:rotate(0deg) scale(1);}
+body.lm #theme-fab{background:var(--ink);color:var(--gold);}
+body.lm #theme-fab .fab-sun{opacity:1;transform:rotate(0deg) scale(1);}
+body.lm #theme-fab .fab-moon{opacity:0;transform:rotate(-90deg) scale(0.5);}
+#theme-fab::before{
+  content:attr(data-tip);
+  position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);
+  background:#0a1628;color:#fff;font-size:11px;font-weight:400;letter-spacing:0.05em;
+  white-space:nowrap;padding:6px 12px;border-radius:6px;
+  opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+body.lm #theme-fab::before{background:#1e3360;}
+#theme-fab:hover::before{opacity:1;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;transition:background 0.3s,color 0.3s;}
+.screen{display:none;}.screen.active{display:block;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.07);padding:0 3rem;height:72px;display:flex;align-items:center;justify-content:space-between;}
+.logo-block{display:flex;flex-direction:column;gap:4px;text-decoration:none;cursor:pointer;}
+.logo-name{font-family:'DM Sans',sans-serif;font-size:28px;font-weight:300;letter-spacing:-0.02em;line-height:1;}
+.logo-name .soln{color:#fff;}.logo-name .law{color:var(--gold);}.logo-name .ai{color:rgba(255,255,255,0.5);font-weight:200;}
+.logo-tagline{font-size:9px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.logo-tagline em{color:var(--gold);font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-weight:300;cursor:pointer;transition:color 0.2s;}
+.nav-links a:hover{color:rgba(255,255,255,0.9);}
+.nav-cta{background:transparent!important;color:var(--gold)!important;border:1px solid rgba(245,200,66,0.4)!important;padding:8px 22px!important;border-radius:3px!important;font-size:12px!important;font-weight:400!important;letter-spacing:0.06em!important;text-transform:uppercase!important;cursor:pointer!important;transition:all 0.2s!important;}
+.nav-cta:hover{background:var(--gold)!important;color:var(--ink)!important;}
+
+/* ── HERO ── */
+.hero{background:#fff;padding:100px 3rem 96px;text-align:center;border-bottom:1px solid var(--border);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border2);border-radius:2px;padding:6px 16px;font-size:10.5px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;}
+.hero-badge::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,6.5vw,76px);font-weight:400;color:var(--ink);line-height:1.07;letter-spacing:-0.03em;max-width:800px;margin:0 auto 28px;}
+.hero h1 em{font-style:italic;color:var(--ink2);}
+.hero-sub{font-size:16px;font-weight:300;color:var(--muted);max-width:440px;margin:0 auto 52px;line-height:1.8;}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.btn-primary{background:var(--ink);color:var(--gold);border:1px solid var(--ink);padding:14px 36px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{background:var(--ink2);}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--border2);padding:14px 36px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;cursor:pointer;transition:all 0.2s;}
+.btn-outline:hover{border-color:var(--ink);}
+.hero-trust{margin-top:60px;font-size:11.5px;font-weight:300;color:rgba(10,22,40,0.3);letter-spacing:0.06em;}
+.hero-trust b{color:var(--ink);font-weight:400;}
+
+/* ── STATS ── */
+.stats-strip{background:var(--ink);padding:0 3rem;border-bottom:1px solid rgba(255,255,255,0.06);}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-item{padding:48px 0;border-right:1px solid rgba(255,255,255,0.06);text-align:center;}
+.stat-item:first-child{border-left:1px solid rgba(255,255,255,0.06);}
+.stat-number{font-family:'Playfair Display',serif;font-size:46px;font-weight:400;color:var(--gold);line-height:1;letter-spacing:-0.02em;}
+.stat-label{font-size:11px;font-weight:300;color:rgba(255,255,255,0.35);margin-top:8px;letter-spacing:0.1em;text-transform:uppercase;}
+
+/* ── SERVICES ── */
+.services-header{padding:88px 3rem 0;max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--ink);line-height:1.15;letter-spacing:-0.02em;max-width:520px;}
+.section-divider{width:32px;height:1px;background:var(--gold);margin:28px 0;}
+.section-sub{font-size:14px;font-weight:300;color:var(--muted);max-width:420px;line-height:1.9;}
+
+/* ── TILES ── */
+.tiles-stack{margin-top:56px;padding:0 2rem 2rem;display:flex;flex-direction:column;gap:12px;}
+.photo-tile{position:relative;width:100%;height:210px;overflow:hidden;cursor:pointer;border-radius:16px;transition:height 0.4s cubic-bezier(0.25,0,0,1);}
+.tile-2{background:#121c2a;}.tile-3{background:#16202e;}.tile-4{background:#0e1a28;}
+.tile-ov-l{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(5,10,20,0.95) 0%,rgba(5,10,20,0.6) 50%,transparent 100%);}
+.tile-ov-r{position:absolute;inset:0;z-index:1;background:linear-gradient(to left,rgba(5,10,20,0.95) 0%,rgba(5,10,20,0.6) 50%,transparent 100%);}
+.tile-accent{position:absolute;top:16px;bottom:16px;width:2px;border-radius:2px;background:var(--gold);opacity:0.35;z-index:2;transition:opacity 0.3s;}
+.tile-accent-l{left:0;}.tile-accent-r{right:0;}
+.photo-tile:hover .tile-accent{opacity:0.9;}
+.tile-content{position:absolute;inset:0;padding:0 52px;z-index:3;display:flex;flex-direction:row;align-items:center;justify-content:space-between;}
+.tile-left{display:flex;flex-direction:column;justify-content:center;max-width:540px;}
+.tile-right{display:flex;flex-direction:column;justify-content:center;max-width:540px;text-align:right;align-items:flex-end;}
+.tile-tag{font-size:9.5px;font-weight:400;color:rgba(245,200,66,0.65);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:12px;}
+.tile-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,34px);font-weight:400;color:#fff;line-height:1.15;letter-spacing:-0.01em;margin-bottom:10px;}
+.tile-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.75;max-width:380px;}
+.tile-cta{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:400;color:rgba(245,200,66,0.75);letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1px solid rgba(245,200,66,0.2);border-radius:3px;padding:10px 22px;white-space:nowrap;flex-shrink:0;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.photo-tile:hover .tile-cta{background:#f5c842;color:#0a1628;border-color:#f5c842;}
+.tile-num{position:absolute;font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;z-index:1;bottom:4px;}
+.tile-num-l{left:40px;}.tile-num-r{right:40px;}
+#tile1:hover{box-shadow:0 0 0 2px var(--gold);}
+
+/* ── EARLY ACCESS ── */
+.ea-section{background:var(--ink);padding:96px 3rem;text-align:center;border-top:1px solid rgba(255,255,255,0.05);}
+.ea-inner{max-width:560px;margin:0 auto;}
+.ea-ey{font-size:10px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:24px;}
+.ea-tit{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:400;color:#fff;line-height:1.12;letter-spacing:-0.02em;margin-bottom:28px;}
+.ea-tit span{color:var(--gold);}
+.ea-div{width:28px;height:1px;background:rgba(245,200,66,0.4);margin:0 auto 28px;}
+.ea-body{font-size:14px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.9;margin-bottom:44px;}
+.ea-note{display:block;margin-top:16px;font-size:11px;letter-spacing:0.08em;color:rgba(255,255,255,0.2);text-transform:uppercase;}
+.btn-ea{display:inline-block;background:var(--gold);color:var(--ink);border:none;padding:16px 48px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;opacity:1!important;visibility:visible!important;}
+.btn-ea:hover{background:var(--gold2);}
+footer{background:var(--ink);border-top:1px solid rgba(255,255,255,0.04);padding:32px 3rem;display:flex;align-items:center;justify-content:space-between;}
+.fl{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;}
+.fl .soln{color:rgba(255,255,255,0.6);}.fl .law{color:var(--gold);}.fl .ai{color:rgba(255,255,255,0.25);font-weight:200;}
+.fr{font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);}
+.fr span{color:rgba(245,200,66,0.5);}
+
+/* ══ SHARED FORM STYLES ══ */
+.field{margin-bottom:20px;}
+.field label,.flabel{display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;-webkit-appearance:none;transition:border-color 0.2s;}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,0.2);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(245,200,66,0.5);}
+.field input.ERR,.field select.ERR{border-color:rgba(210,60,40,0.7);}
+.field select option{background:#0d1e35;color:#fff;}
+.field textarea{resize:vertical;min-height:80px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.em{font-size:11px;color:rgba(210,60,40,0.9);margin-top:5px;display:none;}
+.em.on{display:block;}
+.choices{display:grid;gap:9px;margin-bottom:18px;}
+.ch2{grid-template-columns:1fr 1fr;}
+.choice{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:13px 15px;cursor:pointer;transition:all 0.18s;}
+.choice:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.16);}
+.choice.on{background:rgba(245,200,66,0.09);border-color:rgba(245,200,66,0.5);}
+.choice.greyed{opacity:0.28;pointer-events:none;background:rgba(255,255,255,0.01);}
+.choice.greyed .ct{text-decoration:line-through;color:rgba(255,255,255,0.4);}
+.ct{font-size:13px;font-weight:400;color:#fff;margin-bottom:2px;}
+.cs{font-size:11px;font-weight:300;color:rgba(255,255,255,0.35);line-height:1.5;}
+.ibox{background:rgba(245,200,66,0.05);border:1px solid rgba(245,200,66,0.18);border-radius:8px;padding:13px 15px;margin-bottom:20px;font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.75;}
+.ibox strong{color:rgba(245,200,66,0.75);font-weight:400;}
+.wbox{background:rgba(210,50,30,0.09);border:1px solid rgba(210,80,60,0.35);border-radius:10px;padding:16px 18px;margin-bottom:18px;font-size:13px;font-weight:300;color:rgba(255,190,170,0.95);line-height:1.75;display:none;}
+.wbox.on{display:block;}
+.wbox strong{color:rgba(255,120,90,1);font-weight:500;display:block;margin-bottom:6px;}
+.wbox .hl{color:var(--gold);font-weight:500;}
+.okbox{background:rgba(30,150,80,0.1);border:1px solid rgba(40,160,90,0.3);border-radius:8px;padding:12px 15px;margin-bottom:18px;font-size:12px;font-weight:300;color:rgba(160,240,180,0.9);line-height:1.6;display:none;}
+.okbox.on{display:block;}
+.pc-row{display:flex;gap:10px;margin-bottom:8px;}
+.pc-row input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color 0.2s;}
+.pc-row input:focus{border-color:rgba(245,200,66,0.5);}
+.pc-btn{background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:var(--gold);padding:0 18px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;cursor:pointer;white-space:nowrap;transition:all 0.2s;min-width:110px;}
+.pc-btn:hover{background:rgba(245,200,66,0.22);}
+.pc-list{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;margin-bottom:10px;overflow:hidden;display:none;}
+.pc-list.on{display:block;}
+.pc-item{padding:11px 15px;font-size:13px;font-weight:300;color:rgba(255,255,255,0.75);cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.15s;}
+.pc-item:last-child{border-bottom:none;}
+.pc-item:hover{background:rgba(245,200,66,0.08);}
+.pc-hint{font-size:11px;font-weight:300;color:rgba(255,255,255,0.3);margin-bottom:14px;font-style:italic;}
+.cbx{display:flex;align-items:flex-start;gap:12px;padding:15px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:10px;cursor:pointer;transition:all 0.18s;margin-bottom:10px;}
+.cbx:hover{border-color:rgba(255,255,255,0.16);}
+.cbx.on{background:rgba(245,200,66,0.07);border-color:rgba(245,200,66,0.4);}
+.cbx input{width:16px;height:16px;flex-shrink:0;margin-top:3px;accent-color:var(--gold);cursor:pointer;}
+.cbx span{font-size:13px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.6;}
+.jck{display:flex;align-items:flex-start;gap:12px;padding:11px 13px;border-radius:8px;cursor:pointer;transition:background 0.15s;margin-bottom:5px;}
+.jck:hover{background:rgba(255,255,255,0.04);}
+.jck input{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--gold);cursor:pointer;}
+.jck span{font-size:13px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.6;}
+.rev-sec{margin-bottom:16px;}
+.rev-lbl{font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:8px;}
+.rev-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.rk{font-size:12px;font-weight:300;color:rgba(255,255,255,0.4);}
+.rv{font-size:13px;font-weight:300;color:#fff;text-align:right;max-width:60%;}
+.prefill-badge{display:none;font-size:10px;color:var(--gold);margin-left:6px;font-weight:400;}
+.prefill-badge.on{display:inline;}
+
+/* ── NAV BUTTONS — FIX #6 ALWAYS VISIBLE ── */
+.fnav{display:flex!important;align-items:center;justify-content:space-between;margin-top:36px;gap:12px;}
+.bbk{background:transparent!important;border:1px solid rgba(255,255,255,0.28)!important;color:rgba(255,255,255,0.7)!important;padding:13px 28px!important;border-radius:6px!important;font-family:'DM Sans',sans-serif!important;font-size:12px!important;font-weight:400!important;letter-spacing:0.07em!important;text-transform:uppercase!important;cursor:pointer!important;opacity:1!important;visibility:visible!important;display:inline-block!important;}
+.bbk:hover{border-color:rgba(255,255,255,0.5)!important;color:#fff!important;}
+.bnx{background:var(--gold)!important;color:var(--ink)!important;border:none!important;padding:14px 42px!important;border-radius:6px!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;letter-spacing:0.07em!important;text-transform:uppercase!important;cursor:pointer!important;margin-left:auto!important;opacity:1!important;visibility:visible!important;display:inline-block!important;min-width:160px;text-align:center;transition:background 0.2s!important;}
+.bnx:hover{background:var(--gold2)!important;}
+.bsub{background:var(--gold)!important;color:var(--ink)!important;border:none!important;padding:16px 0!important;border-radius:6px!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;letter-spacing:0.08em!important;text-transform:uppercase!important;cursor:pointer!important;width:100%!important;margin-top:8px!important;opacity:1!important;visibility:visible!important;display:block!important;transition:background 0.2s!important;}
+.bsub:hover{background:var(--gold2)!important;}
+
+/* ══ REGISTRATION MODAL ══ */
+#reg-overlay{position:fixed;inset:0;z-index:8888;background:rgba(5,10,20,0);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;transition:background 0.4s;}
+#reg-overlay.visible{display:flex;background:rgba(5,10,20,0.97);}
+#reg-modal{width:100%;max-width:580px;min-height:100vh;background:var(--ink);display:flex;flex-direction:column;transform:translateY(30px);opacity:0;transition:transform 0.45s cubic-bezier(0.25,0,0,1),opacity 0.35s;}
+#reg-overlay.visible #reg-modal{transform:translateY(0);opacity:1;}
+.rh{display:flex;align-items:center;justify-content:space-between;padding:18px 36px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:var(--ink);z-index:10;}
+.rh-logo{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:300;}
+.rh-logo .soln{color:#fff;}.rh-logo .law{color:var(--gold);}.rh-logo .ai{color:rgba(255,255,255,0.35);font-weight:200;}
+.rh-label{font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.rclose{background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.2s;}
+.rclose:hover{background:rgba(255,255,255,0.06);color:#fff;}
+.rbody{flex:1;padding:52px 36px 80px;}
+.reyebrow{font-size:10px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;}
+.rtitle{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:400;color:#fff;line-height:1.12;letter-spacing:-0.02em;margin-bottom:8px;}
+.rtitle em{font-style:italic;}
+.rsub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:36px;}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:48px;}
+.pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;}
+.pw-strength{display:flex;gap:4px;margin-top:8px;}
+.pw-bar{height:3px;flex:1;background:rgba(255,255,255,0.1);border-radius:2px;transition:background 0.3s;}
+.pw-bar.w{background:#c0392b;}.pw-bar.f{background:#e67e22;}.pw-bar.g{background:#f5c842;}.pw-bar.s{background:#27ae60;}
+
+/* ══ D8 FORM MODAL ══ */
+#d8-overlay{position:fixed;inset:0;z-index:9999;background:rgba(5,10,20,0);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;transition:background 0.4s;}
+#d8-overlay.visible{display:flex;background:rgba(5,10,20,0.97);}
+#d8-modal{width:100%;max-width:700px;min-height:100vh;background:var(--ink);display:flex;flex-direction:column;transform:translateY(30px);opacity:0;transition:transform 0.45s cubic-bezier(0.25,0,0,1),opacity 0.35s;}
+#d8-overlay.visible #d8-modal{transform:translateY(0);opacity:1;}
+.fh{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:var(--ink);z-index:10;}
+.flogo{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:300;}
+.flogo .soln{color:#fff;}.flogo .law{color:var(--gold);}.flogo .ai{color:rgba(255,255,255,0.35);font-weight:200;}
+.fstep{font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.fstep span{color:var(--gold);}
+.fclose{background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.2s;}
+.fclose:hover{background:rgba(255,255,255,0.06);color:#fff;}
+.fprog{height:3px;background:rgba(255,255,255,0.08);}
+.fbar{height:100%;background:var(--gold);transition:width 0.5s cubic-bezier(0.25,0,0,1);}
+.fbody{flex:1;padding:52px 40px 100px;}
+.panel{display:none;}.panel.active{display:block;}
+.ey{font-size:10px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;}
+.ttl{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,34px);font-weight:400;color:#fff;line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px;}
+.ttl em{font-style:italic;}
+.sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.75;margin-bottom:30px;}
+
+/* ══ DASHBOARD ══ */
+#dash{background:var(--ink);min-height:100vh;}
+.dash-nav{padding:0 3rem;height:72px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;background:var(--ink);}
+.dash-logo{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:300;cursor:pointer;}
+.dash-logo .soln{color:#fff;}.dash-logo .law{color:var(--gold);}.dash-logo .ai{color:rgba(255,255,255,0.4);font-weight:200;}
+.dash-user{display:flex;align-items:center;gap:14px;}
+.dash-greeting{font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);}
+.dash-greeting b{color:var(--gold);font-weight:400;}
+.dash-avatar{width:34px;height:34px;border-radius:50%;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--gold);}
+.dash-sign-out{background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);padding:6px 16px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.dash-sign-out:hover{border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);}
+.dash-hero{padding:64px 3rem 0;text-align:center;}
+.dash-welcome-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:2px;padding:6px 16px;font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,200,66,0.7);margin-bottom:28px;}
+.dash-welcome-badge::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.dash-h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:400;color:#fff;line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px;}
+.dash-h1 em{font-style:italic;color:rgba(255,255,255,0.5);}
+.dash-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);max-width:440px;margin:0 auto;line-height:1.8;}
+.dash-divider{width:32px;height:1px;background:rgba(245,200,66,0.4);margin:36px auto 0;}
+.dash-services-hdr{padding:56px 3rem 0;max-width:1100px;margin:0 auto;}
+.dash-ey{font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px;}
+.dash-stit{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,32px);font-weight:400;color:#fff;line-height:1.15;letter-spacing:-0.02em;}
+.dash-tiles{margin-top:40px;padding:0 2rem 3rem;display:flex;flex-direction:column;gap:12px;}
+.dash-tile{position:relative;width:100%;height:200px;overflow:hidden;cursor:pointer;border-radius:16px;transition:height 0.4s cubic-bezier(0.25,0,0,1),box-shadow 0.3s;}
+.dash-tile:hover{height:260px;}
+.dash-tile.t1:hover{box-shadow:0 0 0 2px var(--gold);}
+.dash-tile.t2:hover{box-shadow:0 0 0 2px var(--gold);}
+.dash-tile.t4:hover{box-shadow:0 0 0 2px var(--gold);}
+.dash-tile .tile-cta{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:400;color:rgba(245,200,66,0.75);letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1px solid rgba(245,200,66,0.2);border-radius:3px;padding:10px 22px;white-space:nowrap;flex-shrink:0;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.dash-tile:hover .tile-cta{background:#f5c842;color:#0a1628;border-color:#f5c842;}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ══ -->
+<div id="landing" class="screen active">
+  <nav>
+    <div class="logo-block" onclick="goLanding()">
+      <div class="logo-name"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+      <div class="logo-tagline">Justice Reimagined <em>with AI</em></div>
+    </div>
+    <div class="nav-links">
+      <a>Services</a><a>How it works</a><a>Pricing</a>
+      <a onclick="openPortalLogin()" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:400;cursor:pointer;padding:7px 18px;border:1px solid rgba(255,255,255,0.2);border-radius:4px;transition:all 0.2s;letter-spacing:0.04em;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.85)'">Login</a>
+      <a class="nav-cta" onclick="openReg('getstarted')">Get started</a>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-badge">AI-Powered Legal Platform</div>
+    <h1>Affordable Legal Help,<br><em>Simplified by AI</em></h1>
+    <p class="hero-sub">Navigate the legal system with confidence. Expert-level guidance at a fraction of traditional legal costs.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openReg('full')">Get started free →</button>
+      <button class="btn-outline">See how it works</button>
+    </div>
+    <div class="hero-trust">No lawyer needed — <b>results in minutes,</b> not weeks</div>
+  </div>
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-number">—</div><div class="stat-label">Cases resolved</div></div>
+      <div class="stat-item"><div class="stat-number">—</div><div class="stat-label">Success rate</div></div>
+      <div class="stat-item"><div class="stat-number">—</div><div class="stat-label">Avg. cost</div></div>
+      <div class="stat-item"><div class="stat-number">—</div><div class="stat-label">Avg. turnaround</div></div>
+    </div>
+  </div>
+  <div class="services-header">
+    <div class="section-eyebrow">Our services</div>
+    <div class="section-title">Legal matters,<br>handled simply</div>
+    <div class="section-divider"></div>
+    <p class="section-sub">Choose your situation and let our AI guide you through every step — from paperwork to filing.</p>
+  </div>
+  <div class="tiles-stack">
+    <div class="photo-tile" id="tile1" onclick="openD8()">
+      <div class="tile-ov-l"></div><div class="tile-accent tile-accent-l"></div>
+      <div class="tile-content">
+        <div class="tile-left"><div class="tile-tag">Family Law</div><div class="tile-title">Divorce Application</div><div class="tile-desc">File the official D8 form. Our AI guides you through every question — in plain English.</div></div>
+        <button class="tile-cta" onclick="event.stopPropagation();openD8()">Start filing <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="tile-num tile-num-l">01</div>
+    </div>
+    <div class="photo-tile tile-2" id="tile2" onclick="openN1()">
+      <div class="tile-ov-r"></div><div class="tile-accent tile-accent-r"></div>
+      <div class="tile-content">
+        <button class="tile-cta" onclick="event.stopPropagation();openN1()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Make a claim</button>
+        <div class="tile-right"><div class="tile-tag">Civil Law</div><div class="tile-title">Small Claims Filing</div><div class="tile-desc">Recover money owed to you. AI-guided preparation and submission, made effortless.</div></div>
+      </div>
+      <div class="tile-num tile-num-r">02</div>
+    </div>
+    <div class="photo-tile tile-3">
+      <div class="tile-ov-l"></div><div class="tile-accent tile-accent-l"></div>
+      <div class="tile-content">
+        <div class="tile-left"><div class="tile-tag">Traffic Law</div><div class="tile-title">Parking Ticket Dispute</div><div class="tile-desc">Fight unfair fines with a compelling AI-written appeal letter tailored to your case.</div></div>
+        <button class="tile-cta">Dispute now <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="tile-num tile-num-l">03</div>
+    </div>
+    <div class="photo-tile tile-4" id="tile4" onclick="openIN01()">
+      <div class="tile-ov-r"></div><div class="tile-accent tile-accent-r"></div>
+      <div class="tile-content">
+        <button class="tile-cta" onclick="event.stopPropagation();openIN01()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Form a company</button>
+        <div class="tile-right"><div class="tile-tag">Business Law</div><div class="tile-title">Company Formation</div><div class="tile-desc">Register your business in minutes. Articles, shareholder agreements, Companies House filing.</div></div>
+      </div>
+      <div class="tile-num tile-num-r">04</div>
+    </div>
+  </div>
+  <section class="ea-section">
+    <div class="ea-inner">
+      <div class="ea-ey">Early Access</div>
+      <div class="ea-tit">Be among the first<br>to try it — <span>free.</span></div>
+      <div class="ea-div"></div>
+      <p class="ea-body">Simple legal help shouldn't cost thousands or take weeks.<em class="ea-note">Limited early access. No commitment.</em></p>
+      <button class="btn-ea" onclick="openReg('earlyaccess')">Get Early Access</button>
+    </div>
+  </section>
+  <footer>
+    <div class="fl"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a onclick="openPortalLogin()" style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.3);text-decoration:none;cursor:pointer;transition:color 0.2s;letter-spacing:0.04em;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Client portal</a>
+      <div style="width:1px;height:12px;background:rgba(255,255,255,0.1);"></div>
+      <a onclick="openPortalLogin()" style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.3);text-decoration:none;cursor:pointer;transition:color 0.2s;letter-spacing:0.04em;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">My account</a>
+    </div>
+    <div class="fr">© 2026 solnlaw ai — Not a substitute for legal advice. <span>Powered by AI.</span></div>
+  </footer>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dash" class="screen">
+  <div class="dash-nav">
+    <div class="dash-logo" onclick="goLanding()"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+    <div class="dash-user">
+      <div class="dash-greeting">Welcome back, <b id="dash-name">there</b></div>
+      <!-- Portal link -->
+      <a href="solnlaw-portal.html?demo=1" style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.25);color:var(--gold);padding:6px 14px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(245,200,66,0.18)'" onmouseout="this.style.background='rgba(245,200,66,0.1)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        My portal
+      </a>
+      <div class="dash-avatar" id="dash-initials">?</div>
+      <button class="dash-sign-out" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+  <div class="dash-hero">
+    <div class="dash-welcome-badge">Account activated</div>
+    <div class="dash-h1">What can we help<br><em>you with today?</em></div>
+    <p class="dash-sub">Select a service below to get started. Our AI will guide you through every step.</p>
+    <div class="dash-divider"></div>
+  </div>
+  <div class="dash-services-hdr"><div class="dash-ey">Your legal services</div><div class="dash-stit">Choose your matter</div></div>
+  <div class="dash-tiles">
+    <div class="dash-tile t1" onclick="openD8()">
+      <div class="tile-ov-l"></div><div class="tile-accent tile-accent-l"></div>
+      <div class="tile-content"><div class="tile-left"><div class="tile-tag">Family Law</div><div class="tile-title">Divorce Application</div><div class="tile-desc">File the official D8 form. Our AI guides you through every question.</div></div><button class="tile-cta" onclick="event.stopPropagation();openD8()">Start D8 filing <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+      <div class="tile-num" style="left:40px;font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;z-index:1;bottom:4px;position:absolute;">01</div>
+    </div>
+    <div class="dash-tile t2" onclick="openN1()" style="background:#121c2a;"><div class="tile-ov-r"></div><div class="tile-accent tile-accent-r"></div><div class="tile-content"><button class="tile-cta" onclick="event.stopPropagation();openN1()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Make a claim</button><div class="tile-right"><div class="tile-tag">Civil Law</div><div class="tile-title">Small Claims Filing</div><div class="tile-desc">Recover money owed to you.</div></div></div><div style="position:absolute;right:40px;bottom:4px;font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;z-index:1;">02</div></div>
+    <div class="dash-tile" style="background:#16202e;"><div class="tile-ov-l"></div><div class="tile-accent tile-accent-l"></div><div class="tile-content"><div class="tile-left"><div class="tile-tag">Traffic Law</div><div class="tile-title">Parking Ticket Dispute</div><div class="tile-desc">Fight unfair fines with an AI-written appeal.</div></div><button class="tile-cta">Dispute now <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div><div style="position:absolute;left:40px;bottom:4px;font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;z-index:1;">03</div></div>
+    <div class="dash-tile t4" onclick="openIN01()" style="background:#0e1a28;"><div class="tile-ov-r"></div><div class="tile-accent tile-accent-r"></div><div class="tile-content"><button class="tile-cta" onclick="event.stopPropagation();openIN01()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Form a company</button><div class="tile-right"><div class="tile-tag">Business Law</div><div class="tile-title">Company Formation</div><div class="tile-desc">Register your business in minutes.</div></div></div><div style="position:absolute;right:40px;bottom:4px;font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;z-index:1;">04</div></div>
+  </div>
+  <div style="background:var(--ink);border-top:1px solid rgba(255,255,255,0.04);padding:24px 3rem;display:flex;align-items:center;justify-content:space-between;"><div style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;"><span style="color:rgba(255,255,255,0.5);">soln</span><span style="color:var(--gold);">law</span><span style="color:rgba(255,255,255,0.25);"> ai</span></div><div style="font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);">Not a substitute for legal advice. <span style="color:rgba(245,200,66,0.5);">Powered by AI.</span></div></div>
+</div>
+
+<!-- ══ REGISTRATION MODAL ══ -->
+<div id="reg-overlay" onclick="handleRegClick(event)">
+  <div id="reg-modal">
+    <div class="rh">
+      <div class="rh-logo"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+      <div class="rh-label" id="reg-label">Create your account</div>
+      <button class="rclose" onclick="closeReg()">✕</button>
+    </div>
+    <div class="rbody" id="reg-body">
+      <div class="reyebrow" id="reg-ey">Account registration</div>
+      <div class="rtitle" id="reg-title">Create your free<br><em>solnlaw ai account</em></div>
+      <p class="rsub" id="reg-sub">Get instant access to all our AI-powered legal services. Free to register — no credit card required.</p>
+      <div class="row2">
+        <div class="field"><label>First name</label><input type="text" id="r-fn" placeholder="First name"><div class="em" id="err-r-fn">Required</div></div>
+        <div class="field"><label>Last name</label><input type="text" id="r-ln" placeholder="Last name"><div class="em" id="err-r-ln">Required</div></div>
+      </div>
+      <div class="field"><label>Email address <span style="color:var(--gold);">*</span></label><input type="email" id="r-email" placeholder="your@email.com"><div class="em" id="err-r-email">Please enter a valid email</div></div>
+      <div class="field"><label>Phone <span style="opacity:0.5">(optional)</span></label><input type="tel" id="r-phone" placeholder="+44 7700 900000"></div>
+      <div class="field"><label>Date of birth</label><input type="date" id="r-dob"><div class="em" id="err-r-dob">Required</div></div>
+      <div class="field"><label>How did you hear about us?</label><select id="r-src"><option value="">Select…</option><option>Google search</option><option>Social media</option><option>Friend or family</option><option>Solicitor referral</option><option>News article</option><option>Other</option></select></div>
+      <div class="field"><label>Create password</label>
+        <div class="pw-wrap"><input type="password" id="r-pw" placeholder="At least 8 characters" oninput="chkPw(this.value)"><button class="pw-toggle" type="button" onclick="tglPw()">show</button></div>
+        <div class="pw-strength"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div></div>
+        <div class="em" id="err-r-pw">Password must be at least 8 characters</div>
+      </div>
+      <div class="field"><label>Confirm password</label><input type="password" id="r-pw2" placeholder="Repeat password"><div class="em" id="err-r-pw2">Passwords do not match</div></div>
+      <div style="margin-top:8px;">
+        <label class="cbx" id="cb-terms" onclick="tglCbR('cb-terms','r-terms')"><input type="checkbox" id="r-terms" onchange="updCbR('cb-terms',this)"><span>I agree to the <u style="color:var(--gold);">Terms of Service</u> and <u style="color:var(--gold);">Privacy Policy</u></span></label>
+        <div class="em" id="err-r-terms">You must agree to continue</div>
+        <label class="cbx" id="cb-mkt" onclick="tglCbR('cb-mkt','r-mkt')" style="margin-top:6px;"><input type="checkbox" id="r-mkt" onchange="updCbR('cb-mkt',this)"><span>I'd like to receive updates from solnlaw ai (optional)</span></label>
+      </div>
+      <div style="margin-top:32px;"><button class="bsub" onclick="submitReg()">Create my account →</button></div>
+      <div style="margin-top:20px;text-align:center;font-size:12px;color:rgba(255,255,255,0.25);">Already have an account? <span style="color:var(--gold);cursor:pointer;" onclick="closeReg()">Sign in</span></div>
+    </div>
+    <div id="reg-success" style="display:none;text-align:center;padding:80px 20px;">
+      <div style="width:52px;height:52px;border:1.5px solid rgba(245,200,66,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><svg width="20" height="20" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:#fff;margin-bottom:14px;">You're on the list!</div>
+      <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.8;max-width:400px;margin:0 auto 36px;">Thanks for registering. We'll be in touch when early access opens.</div>
+      <button style="background:var(--gold);color:var(--ink);border:none;padding:14px 40px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;" onclick="closeReg()">Back to homepage</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ D8 FORM MODAL ══ -->
+<div id="d8-overlay" onclick="handleD8Click(event)">
+  <div id="d8-modal">
+    <div class="fh">
+      <div class="flogo"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+      <div class="fstep">D8 Divorce Application &nbsp;·&nbsp; Step <span id="si">1</span> of 10</div>
+      <button class="fclose" onclick="closeD8()">✕</button>
+    </div>
+    <div class="fprog"><div class="fbar" id="fbar" style="width:10%"></div></div>
+    <div class="fbody">
+
+      <!-- STEP 1 -->
+      <div class="panel active" id="p1">
+        <div class="ey">Section 1 — Your application</div>
+        <div class="ttl">What type of<br><em>application are you making?</em></div>
+        <div class="sub">You can only apply if you have been married or in a civil partnership for at least one year.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">1.1 Application type</div>
+        <div class="choices ch2" style="margin-bottom:18px;">
+          <div class="choice" data-g="apptype" data-v="divorce" onclick="pick(this)"><div class="ct">Divorce</div><div class="cs">Marriage has broken down irretrievably</div></div>
+          <div class="choice" data-g="apptype" data-v="dissolution" onclick="pick(this)"><div class="ct">Dissolution</div><div class="cs">Civil partnership breakdown</div></div>
+        </div>
+        <div class="em" id="err-apptype">Please select an option</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;margin-top:10px;">1.2 Sole or joint application?</div>
+        <div class="choices ch2" style="margin-bottom:18px;">
+          <div class="choice" data-g="solejoint" data-v="sole" onclick="pick(this)"><div class="ct">Sole application</div><div class="cs">I am applying on my own</div></div>
+          <div class="choice" data-g="solejoint" data-v="joint" onclick="pick(this)"><div class="ct">Joint application</div><div class="cs">We are applying together</div></div>
+        </div>
+        <div class="em" id="err-solejoint">Please select an option</div>
+        <div class="ibox" style="margin-top:14px;"><strong>Required:</strong> Original or certified copy of your marriage/civil partnership certificate. A photocopy will not be accepted.</div>
+        <div class="choices ch2" style="margin-bottom:10px;">
+          <div class="choice" data-g="cert" data-v="yes" onclick="pick(this)"><div class="ct">I have the certificate</div></div>
+          <div class="choice" data-g="cert" data-v="no" onclick="pick(this)"><div class="ct">I need to obtain it</div></div>
+        </div>
+        <div class="em" id="err-cert">Please select an option</div>
+        <div class="choices ch2" style="margin-top:10px;margin-bottom:8px;">
+          <div class="choice" data-g="needtrans" data-v="yes" onclick="pick(this)"><div class="ct">Translation needed</div><div class="cs">Certificate not in English</div></div>
+          <div class="choice" data-g="needtrans" data-v="no" onclick="pick(this)"><div class="ct">No translation needed</div></div>
+        </div>
+        <div class="em" id="err-needtrans">Please select an option</div>
+        <div class="fnav"><button class="bnx" onclick="nxt(1)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 2: Respondent -->
+      <div class="panel" id="p2">
+        <div class="ey">Section 3 — Respondent / applicant 2</div>
+        <div class="ttl">Details of your<br><em>spouse or civil partner</em></div>
+        <div class="sub">If sole applicant, complete with the respondent's details.</div>
+        <div class="row2">
+          <div class="field"><label>First name(s)</label><input type="text" id="sp-fn" placeholder="First name(s)"><div class="em" id="err-sp-fn">Required</div></div>
+          <div class="field"><label>Middle name(s) (optional)</label><input type="text" id="sp-mn"></div>
+        </div>
+        <div class="field"><label>Last name</label><input type="text" id="sp-ln" placeholder="Last name"><div class="em" id="err-sp-ln">Required</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Is this their married name / name on certificate?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="sp-certname" data-v="yes" onclick="pick(this)"><div class="ct">Yes</div></div>
+          <div class="choice" data-g="sp-certname" data-v="no" onclick="pick(this)"><div class="ct">No — name has changed</div></div>
+        </div>
+        <div class="em" id="err-sp-certname" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <!-- FIX #2: Postcode finder -->
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Respondent's address</div>
+        <div class="pc-row"><input type="text" id="sp-pc" placeholder="Enter postcode e.g. SW1A 2AA" oninput="this.value=this.value.toUpperCase()"><button class="pc-btn" onclick="findPc('sp')">Find address</button></div>
+        <div class="pc-list" id="sp-pc-list"></div>
+        <p class="pc-hint">Or enter manually below</p>
+        <div class="field"><label>Building and street</label><input type="text" id="sp-a1" placeholder="Building and street"><div class="em" id="err-sp-a1">Required</div></div>
+        <div class="field"><label>Second line (optional)</label><input type="text" id="sp-a2"></div>
+        <div class="row2">
+          <div class="field"><label>Town or city</label><input type="text" id="sp-town"><div class="em" id="err-sp-town">Required</div></div>
+          <div class="field"><label>County (optional)</label><input type="text" id="sp-county"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Country</label><input type="text" id="sp-ctry" value="England"><div class="em" id="err-sp-ctry">Required</div></div>
+          <div class="field"><label>Postcode</label><input type="text" id="sp-post"><div class="em" id="err-sp-post">Required</div></div>
+        </div>
+        <div class="field"><label>Phone (optional)</label><input type="tel" id="sp-phone"></div>
+        <div class="field"><label>Email (optional)</label><input type="email" id="sp-email" placeholder="their@email.com"></div>
+        <div class="ibox">Use respondent's personal email — avoid work addresses.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Application to be served outside England and Wales?</div>
+        <div class="choices ch2" style="margin-bottom:8px;">
+          <div class="choice" data-g="overseas" data-v="no" onclick="pick(this)"><div class="ct">No — England & Wales</div></div>
+          <div class="choice" data-g="overseas" data-v="yes" onclick="pick(this)"><div class="ct">Yes — overseas</div></div>
+        </div>
+        <div class="em" id="err-overseas">Required</div>
+        <div class="fnav"><button class="bbk" onclick="bck(2)">← Back</button><button class="bnx" onclick="nxt(2)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 3: Marriage details + FIX #5 date validation -->
+      <div class="panel" id="p3">
+        <div class="ey">Section 4 — Marriage / civil partnership</div>
+        <div class="ttl">Your marriage<br><em>details</em></div>
+        <div class="sub">You will need your marriage or civil partnership certificate for this section.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">4.1 Did the marriage take place outside the UK?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="outsideuk" data-v="no" onclick="pick(this)"><div class="ct">No — UK</div></div>
+          <div class="choice" data-g="outsideuk" data-v="yes" onclick="pick(this)"><div class="ct">Yes — outside UK</div></div>
+        </div>
+        <div class="em" id="err-outsideuk" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field">
+          <label>4.3 Date of marriage or civil partnership</label>
+          <input type="date" id="marr-date" onchange="chkDate()" oninput="chkDate()">
+          <div class="em" id="err-marr-date">Required</div>
+        </div>
+        <!-- FIX #5: warning + OK boxes -->
+        <div class="wbox" id="wbox-date">
+          <strong>⚠ Not yet eligible to file for divorce</strong>
+          Based on the date you have entered, one year has not yet passed since your marriage. Under English law you must be married for at least one year before you can apply.<br><br>
+          The <span class="hl">earliest date you can apply</span> is: <strong id="earliest-txt" class="hl"></strong><br><br>
+          Please re-check your marriage certificate. If the date is correct, please return on or after the date shown above. You cannot proceed until that date.
+        </div>
+        <div class="okbox" id="okbox-date">✓ More than one year has passed since your marriage. You are eligible to apply.</div>
+        <div class="field"><label>Place of marriage (as shown on certificate)</label><input type="text" id="marr-place" placeholder="e.g. London, England"><div class="em" id="err-marr-place">Required</div></div>
+        <div class="field"><label>4.4 Your full name as shown on the certificate</label><input type="text" id="cert-n1" placeholder="As it appears on the certificate"><div class="em" id="err-cert-n1">Required</div></div>
+        <div class="field"><label>Spouse / civil partner's full name as shown on the certificate</label><input type="text" id="cert-n2" placeholder="As it appears on the certificate"><div class="em" id="err-cert-n2">Required</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">4.5 Are the details on the certificate correct?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="certcorrect" data-v="yes" onclick="pick(this)"><div class="ct">Yes, correct</div></div>
+          <div class="choice" data-g="certcorrect" data-v="no" onclick="pick(this);document.getElementById('cert-explain').style.display='block'"><div class="ct">No — please explain</div></div>
+        </div>
+        <div class="em" id="err-certcorrect" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field" id="cert-explain" style="display:none;"><label>Please explain the discrepancy</label><textarea id="cert-exp" placeholder="Explain any errors…"></textarea></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">4.2 Applying without certificate?</div>
+        <div class="choices ch2" style="margin-bottom:8px;">
+          <div class="choice" data-g="nocert" data-v="no" onclick="pick(this)"><div class="ct">No — I have it</div></div>
+          <div class="choice" data-g="nocert" data-v="yes" onclick="pick(this)"><div class="ct">Yes — separate application</div></div>
+        </div>
+        <div class="em" id="err-nocert">Required</div>
+        <div class="fnav"><button class="bbk" onclick="bck(3)">← Back</button><button class="bnx" onclick="nxt(3)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 4: Jurisdiction -->
+      <div class="panel" id="p4">
+        <div class="ey">Section 5 — Jurisdiction</div>
+        <div class="ttl">Why this court<br><em>can deal with your case</em></div>
+        <div class="sub">Select all reasons that apply. Most applicants living in England & Wales select the first option.</div>
+        <div class="ibox"><strong>Habitual residence</strong> = where your life is mainly based. <strong>Domicile</strong> = your permanent home country.</div>
+        <label class="jck"><input type="checkbox" name="juris" value="both-hab"><span>Both parties are habitually resident in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="last-hab"><span>Both parties were last habitually resident in England and Wales and one continues to reside there</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="resp-hab"><span>The respondent is habitually resident in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="app1-hab"><span>Joint application — applicant 1 is habitually resident in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="app-1yr"><span>Applicant habitually resident in England and Wales for at least one year before the application</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="app-6m"><span>Applicant domiciled and habitually resident in England and Wales for at least six months before the application</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="both-dom"><span>Both parties are domiciled in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="app1-dom"><span>Only applicant 1 / sole applicant is domiciled in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="resp-dom"><span>Only the respondent is domiciled in England and Wales</span></label>
+        <label class="jck"><input type="checkbox" name="juris" value="civil"><span>Civil partners / same-sex marriage — registered in England or Wales, interests of justice</span></label>
+        <div class="em" id="err-juris" style="margin-top:10px;">Please select at least one reason</div>
+        <div class="fnav"><button class="bbk" onclick="bck(4)">← Back</button><button class="bnx" onclick="nxt(4)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 5: Irretrievable breakdown — FIX #3 greyed fault options -->
+      <div class="panel" id="p5">
+        <div class="ey">Section 6 — Statement of irretrievable breakdown</div>
+        <div class="ttl">The legal reason<br><em>for your divorce</em></div>
+        <div class="sub">Confirm that your marriage has broken down irretrievably.</div>
+        <div class="ibox"><strong>No-fault divorce only (since April 2022)</strong> — Under the Divorce, Dissolution and Separation Act 2020, you simply confirm the marriage has broken down irretrievably. Fault-based grounds are no longer used and are shown greyed out below for reference only.</div>
+        <div class="choices" style="margin-bottom:16px;">
+          <div class="choice on" style="cursor:default;border-color:rgba(245,200,66,0.5);"><div class="ct">Irretrievable breakdown <span style="font-size:10px;color:var(--gold);margin-left:8px;font-weight:400;">✓ SELECTED — NO FAULT</span></div><div class="cs">The only ground available under current English law. No blame assigned to either party.</div></div>
+        </div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:7px;">Not applicable — shown for reference only</div>
+        <div class="choices" style="margin-bottom:18px;">
+          <div class="choice greyed"><div class="ct">Adultery</div><div class="cs">Not applicable — no-fault divorce only since April 2022</div></div>
+          <div class="choice greyed"><div class="ct">Unreasonable behaviour</div><div class="cs">Not applicable — no-fault divorce only since April 2022</div></div>
+          <div class="choice greyed"><div class="ct">Desertion</div><div class="cs">Not applicable — no-fault divorce only since April 2022</div></div>
+          <div class="choice greyed"><div class="ct">2 years separation with consent</div><div class="cs">Not applicable — no-fault divorce only since April 2022</div></div>
+          <div class="choice greyed"><div class="ct">5 years separation</div><div class="cs">Not applicable — no-fault divorce only since April 2022</div></div>
+        </div>
+        <label class="cbx" id="cb1" onclick="tglCb('cb1','irr1')"><input type="checkbox" id="irr1" onchange="updCb('cb1',this)"><span><strong>Sole applicant or applicant 1:</strong> I confirm that my marriage or civil partnership has broken down irretrievably.</span></label>
+        <div class="em" id="err-irr1" style="margin-bottom:10px;">You must confirm this to proceed</div>
+        <label class="cbx" id="cb2" onclick="tglCb('cb2','irr2')"><input type="checkbox" id="irr2" onchange="updCb('cb2',this)"><span><strong>Applicant 2 (joint applications only):</strong> I confirm that my marriage or civil partnership has broken down irretrievably.</span></label>
+        <div class="fnav"><button class="bbk" onclick="bck(5)">← Back</button><button class="bnx" onclick="nxt(5)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 6: Previous proceedings -->
+      <div class="panel" id="p6">
+        <div class="ey">Section 7 — Existing or previous court cases</div>
+        <div class="ttl">Previous court<br><em>proceedings</em></div>
+        <div class="sub">Tell us about any existing or previous court proceedings relating to your marriage, including overseas proceedings.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">7.1 Any existing or previous court proceedings?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="procs" data-v="no" onclick="pick(this);document.getElementById('proc-det').style.display='none'"><div class="ct">No</div></div>
+          <div class="choice" data-g="procs" data-v="yes" onclick="pick(this);document.getElementById('proc-det').style.display='block'"><div class="ct">Yes — provide details</div></div>
+        </div>
+        <div class="em" id="err-procs" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="proc-det" style="display:none;">
+          <div class="field"><label>Case number(s)</label><input type="text" id="case-nums" placeholder="e.g. FL123456"></div>
+          <div class="field"><label>Summary of proceedings</label><textarea id="proc-summ" placeholder="Briefly describe…"></textarea></div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="bck(6)">← Back</button><button class="bnx" onclick="nxt(6)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 7: Financial orders -->
+      <div class="panel" id="p7">
+        <div class="ey">Section 8 — Dividing money and property</div>
+        <div class="ttl">Financial orders<br><em>and assets</em></div>
+        <div class="sub">You can apply to the court to formally resolve how money, property, pensions and assets are split.</div>
+        <div class="ibox">Financial orders may include: maintenance, periodical payments, lump sum, property adjustment, and pension sharing orders. If unsure, seek legal advice.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">8.1 Do you want to apply for a financial order? (Applicant 1)</div>
+        <div class="choices" style="margin-bottom:14px;">
+          <div class="choice" data-g="fin1" data-v="self" onclick="pick(this)"><div class="ct">Yes — for myself</div></div>
+          <div class="choice" data-g="fin1" data-v="children" onclick="pick(this)"><div class="ct">Yes — for the children</div></div>
+          <div class="choice" data-g="fin1" data-v="both" onclick="pick(this)"><div class="ct">Yes — for myself and the children</div></div>
+          <div class="choice" data-g="fin1" data-v="no" onclick="pick(this)"><div class="ct">No</div><div class="cs">You can still apply later (before remarrying)</div></div>
+        </div>
+        <div class="em" id="err-fin1" style="margin-top:-8px;margin-bottom:14px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Applicant 2 — financial order (joint applications)</div>
+        <div class="choices" style="margin-bottom:8px;">
+          <div class="choice" data-g="fin2" data-v="self" onclick="pick(this)"><div class="ct">Yes — for myself</div></div>
+          <div class="choice" data-g="fin2" data-v="children" onclick="pick(this)"><div class="ct">Yes — for the children</div></div>
+          <div class="choice" data-g="fin2" data-v="both" onclick="pick(this)"><div class="ct">Yes — for both</div></div>
+          <div class="choice" data-g="fin2" data-v="no" onclick="pick(this)"><div class="ct">No</div></div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="bck(7)">← Back</button><button class="bnx" onclick="nxt(7)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 8: Court fee -->
+      <div class="panel" id="p8">
+        <div class="ey">Court fee</div>
+        <div class="ttl">Court fee<br><em>payment method</em></div>
+        <div class="sub">The current divorce court fee is £593. You may be eligible for Help with Fees if on a low income.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">How will you pay?</div>
+        <div class="choices" style="margin-bottom:14px;">
+          <div class="choice" data-g="feepay" data-v="card" onclick="pick(this);document.getElementById('hwf-det').style.display='none'"><div class="ct">Debit or credit card</div><div class="cs">Court contacts you within 28 days</div></div>
+          <div class="choice" data-g="feepay" data-v="hwf" onclick="pick(this);document.getElementById('hwf-det').style.display='block'"><div class="ct">Help with Fees (online)</div><div class="cs">I have a HWF reference number</div></div>
+          <div class="choice" data-g="feepay" data-v="hwf-form" onclick="pick(this);document.getElementById('hwf-det').style.display='none'"><div class="ct">Help with Fees (EX160 form)</div></div>
+          <div class="choice" data-g="feepay" data-v="cheque" onclick="pick(this);document.getElementById('hwf-det').style.display='none'"><div class="ct">Cheque / postal order</div><div class="cs">Made payable to 'HMCTS'</div></div>
+        </div>
+        <div class="em" id="err-feepay" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="hwf-det" style="display:none;"><div class="field"><label>HWF reference number</label><input type="text" id="hwf-ref" placeholder="HWF-XXXXXXX"></div></div>
+        <div class="fnav"><button class="bbk" onclick="bck(8)">← Back</button><button class="bnx" onclick="nxt(8)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 9: Your details — FIX #1 auto-populated, FIX #4 email mandatory, FIX #2 postcode -->
+      <div class="panel" id="p9">
+        <div class="ey">Section 2 — About you (applicant 1)</div>
+        <div class="ttl">Your personal<br><em>details</em></div>
+        <div class="sub">Almost done. Fields pre-filled from your earlier answers where possible — please review and update.</div>
+        <div class="ibox" id="prefill-notice" style="display:none;"><strong>✓ Fields marked with gold have been pre-filled</strong> from your earlier answers. Please check and correct if needed.</div>
+        <div class="row2">
+          <div class="field"><label>First name(s) <span class="prefill-badge" id="badge-fn">✓ pre-filled</span></label><input type="text" id="a1-fn" placeholder="First name(s)"><div class="em" id="err-a1-fn">Required</div></div>
+          <div class="field"><label>Middle name(s) (optional)</label><input type="text" id="a1-mn"></div>
+        </div>
+        <div class="field"><label>Last name <span class="prefill-badge" id="badge-ln">✓ pre-filled</span></label><input type="text" id="a1-ln" placeholder="Last name"><div class="em" id="err-a1-ln">Required</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Is this your married name / name on certificate?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="a1-certname" data-v="yes" onclick="pick(this)"><div class="ct">Yes</div></div>
+          <div class="choice" data-g="a1-certname" data-v="no" onclick="pick(this)"><div class="ct">No — name has changed</div></div>
+        </div>
+        <div class="em" id="err-a1-certname" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">2.2 Keep contact details confidential from spouse?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="a1-conf" data-v="yes" onclick="pick(this)"><div class="ct">Yes — keep confidential</div></div>
+          <div class="choice" data-g="a1-conf" data-v="no" onclick="pick(this)"><div class="ct">No</div></div>
+        </div>
+        <div class="em" id="err-a1-conf" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <!-- FIX #2: Postcode finder — applicant -->
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">2.3 Your address</div>
+        <div class="pc-row"><input type="text" id="a1-pc" placeholder="Enter postcode e.g. EC1A 1BB" oninput="this.value=this.value.toUpperCase()"><button class="pc-btn" onclick="findPc('a1')">Find address</button></div>
+        <div class="pc-list" id="a1-pc-list"></div>
+        <p class="pc-hint">Or enter manually below</p>
+        <div class="field"><label>Building and street</label><input type="text" id="a1-a1" placeholder="Building and street"><div class="em" id="err-a1-a1">Required</div></div>
+        <div class="field"><label>Second line (optional)</label><input type="text" id="a1-a2"></div>
+        <div class="row2">
+          <div class="field"><label>Town or city</label><input type="text" id="a1-town"><div class="em" id="err-a1-town">Required</div></div>
+          <div class="field"><label>County (optional)</label><input type="text" id="a1-county"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Country</label><input type="text" id="a1-ctry" value="England"><div class="em" id="err-a1-ctry">Required</div></div>
+          <div class="field"><label>Postcode</label><input type="text" id="a1-post"><div class="em" id="err-a1-post">Required</div></div>
+        </div>
+        <div class="field"><label>Phone (optional)</label><input type="tel" id="a1-phone" placeholder="+44"></div>
+        <!-- FIX #4: Email mandatory + pre-filled -->
+        <div class="field"><label>Email address <span style="color:var(--gold);">*</span> <span class="prefill-badge" id="badge-email">✓ pre-filled</span></label><input type="email" id="a1-email" placeholder="your@email.com (required)"><div class="em" id="err-a1-email">A valid email address is required</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">2.4 Do you have a solicitor?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="hassol" data-v="no" onclick="pick(this);document.getElementById('sol-det').style.display='none'"><div class="ct">No solicitor</div></div>
+          <div class="choice" data-g="hassol" data-v="yes" onclick="pick(this);document.getElementById('sol-det').style.display='block'"><div class="ct">Yes — I have a solicitor</div></div>
+        </div>
+        <div class="em" id="err-hassol" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="sol-det" style="display:none;">
+          <div class="field"><label>Solicitor's name</label><input type="text" id="sol-name"></div>
+          <div class="field"><label>Reference number (optional)</label><input type="text" id="sol-ref"></div>
+          <div class="field"><label>Solicitor's firm</label><input type="text" id="sol-firm"></div>
+          <div class="field"><label>Firm address</label><input type="text" id="sol-addr"></div>
+          <div class="row2"><div class="field"><label>Firm phone</label><input type="tel" id="sol-phone"></div><div class="field"><label>Firm email</label><input type="email" id="sol-email"></div></div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="bck(9)">← Back</button><button class="bnx" onclick="nxt(9)">Review →</button></div>
+      </div>
+
+      <!-- STEP 10: Review & Statement of Truth -->
+      <div class="panel" id="p10">
+        <div class="ey">Section 10 — Review & statement of truth</div>
+        <div class="ttl">Review your<br><em>application</em></div>
+        <div class="sub">Please check all details carefully before signing and submitting your D8 application.</div>
+        <div id="rev-content"></div>
+        <div style="margin-top:20px;"><div class="ibox"><strong>Statement of truth:</strong> I understand that proceedings for contempt of court may be brought against anyone who makes, or causes to be made, a false statement in a document verified by a statement of truth without an honest belief in its truth.</div></div>
+        <label class="cbx" id="cb-sot" onclick="tglCb('cb-sot','sot')"><input type="checkbox" id="sot" onchange="updCb('cb-sot',this)"><span>I believe that the facts stated in this application and any continuation sheets are true.</span></label>
+        <div class="em" id="err-sot" style="margin-top:4px;margin-bottom:14px;">You must confirm the statement of truth</div>
+        <!-- FIX #6: Always-visible submit button -->
+        <button class="bsub" onclick="doSubmit()">Submit D8 Application →</button>
+        <div class="fnav" style="margin-top:16px;justify-content:flex-start;"><button class="bbk" onclick="bck(10)">← Edit answers</button></div>
+      </div>
+
+      <!-- D8 Success -->
+      <div id="d8-succ" style="display:none;text-align:center;padding:80px 20px;">
+        <div style="width:52px;height:52px;border:1.5px solid rgba(245,200,66,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><svg width="20" height="20" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:#fff;margin-bottom:14px;">Application submitted</div>
+        <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.8;max-width:420px;margin:0 auto 32px;">Your D8 divorce application has been received. A member of the solnlaw ai team will be in touch within 24 hours with next steps and payment instructions.</div>
+        <button style="background:transparent;border:1px solid rgba(245,200,66,0.3);color:var(--gold);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-right:10px;" onclick="closeD8()">← Back to services</button>
+        <button style="background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;" onclick="resetD8()">New application</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   SCREEN MANAGEMENT
+════════════════════════════════════════ */
+function goLanding(){
+  document.getElementById('landing').classList.add('active');
+  document.getElementById('dash').classList.remove('active');
+}
+function goDash(name){
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('dash').classList.add('active');
+  if(name){
+    document.getElementById('dash-name').textContent=name;
+    var p=name.trim().split(' ');
+    document.getElementById('dash-initials').textContent=((p[0]?p[0][0]:'')+(p[1]?p[1][0]:'')).toUpperCase()||'U';
+  }
+  window.scrollTo(0,0);
+}
+function signOut(){goLanding();}
+
+/* Tile hover */
+document.querySelectorAll('.photo-tile').forEach(function(t){
+  t.addEventListener('mouseenter',function(){
+    t.style.height='260px';
+    if(t.id==='tile1')t.style.boxShadow='0 0 0 2px #f5c842';
+    if(t.id==='tile2')t.style.boxShadow='0 0 0 2px #f5c842';
+    if(t.id==='tile4')t.style.boxShadow='0 0 0 2px #f5c842';
+  });
+  t.addEventListener('mouseleave',function(){
+    t.style.height='210px';t.style.boxShadow='';
+  });
+});
+
+/* ════════════════════════════════════════
+   REGISTRATION MODAL
+   mode: 'full' → reg + dashboard
+         'getstarted' → reg only, close after
+         'earlyaccess' → reg only, success inside modal
+════════════════════════════════════════ */
+var regOverlay=document.getElementById('reg-overlay');
+var regMode='full';
+
+function openReg(mode){
+  regMode=mode||'full';
+  document.getElementById('reg-body').style.display='block';
+  document.getElementById('reg-success').style.display='none';
+  if(mode==='earlyaccess'){
+    document.getElementById('reg-label').textContent='Join the waitlist';
+    document.getElementById('reg-ey').textContent='Early access registration';
+    document.getElementById('reg-title').innerHTML='Join the waitlist for<br><em>free early access</em>';
+    document.getElementById('reg-sub').textContent='Be among the first to use solnlaw ai when we launch. Free to register — no credit card required.';
+  } else {
+    document.getElementById('reg-label').textContent='Create your account';
+    document.getElementById('reg-ey').textContent='Account registration';
+    document.getElementById('reg-title').innerHTML='Create your free<br><em>solnlaw ai account</em>';
+    document.getElementById('reg-sub').textContent='Get instant access to all our AI-powered legal services. Free to register — no credit card required.';
+  }
+  // FIX #1: Pre-populate from D8 data if available
+  prefillReg();
+  regOverlay.style.display='flex';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){regOverlay.classList.add('visible');});});
+  document.body.style.overflow='hidden';
+}
+function closeReg(){
+  regOverlay.classList.remove('visible');
+  setTimeout(function(){regOverlay.style.display='none';document.body.style.overflow='';},400);
+}
+function handleRegClick(e){if(e.target===regOverlay)closeReg();}
+
+function tglPw(){var i=document.getElementById('r-pw');i.type=i.type==='password'?'text':'password';i.nextElementSibling.textContent=i.type==='password'?'show':'hide';}
+function chkPw(v){
+  var b=['pb1','pb2','pb3','pb4'];
+  b.forEach(function(x){document.getElementById(x).className='pw-bar';});
+  var s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  var c=['w','f','g','s'];for(var i=0;i<s;i++)document.getElementById(b[i]).classList.add(c[s-1]);
+}
+function tglCbR(bId,cId){var c=document.getElementById(cId);c.checked=!c.checked;updCbR(bId,c);}
+function updCbR(bId,c){document.getElementById(bId).classList.toggle('on',c.checked);}
+function rv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+
+function submitReg(){
+  var ok=true;
+  function rf(id,eid){if(!rv(id)){document.getElementById(id).classList.add('ERR');document.getElementById(eid).classList.add('on');ok=false;}else{document.getElementById(id).classList.remove('ERR');document.getElementById(eid).classList.remove('on');}}
+  rf('r-fn','err-r-fn');rf('r-ln','err-r-ln');rf('r-dob','err-r-dob');
+  var em=rv('r-email');var eok=em&&/^[^@]+@[^@]+\.[^@]+$/.test(em);
+  document.getElementById('r-email').classList.toggle('ERR',!eok);document.getElementById('err-r-email').classList.toggle('on',!eok);if(!eok)ok=false;
+  var pw=rv('r-pw');if(pw.length<8){document.getElementById('r-pw').classList.add('ERR');document.getElementById('err-r-pw').classList.add('on');ok=false;}else{document.getElementById('r-pw').classList.remove('ERR');document.getElementById('err-r-pw').classList.remove('on');}
+  if(rv('r-pw2')!==pw){document.getElementById('r-pw2').classList.add('ERR');document.getElementById('err-r-pw2').classList.add('on');ok=false;}else{document.getElementById('r-pw2').classList.remove('ERR');document.getElementById('err-r-pw2').classList.remove('on');}
+  if(!document.getElementById('r-terms').checked){document.getElementById('err-r-terms').classList.add('on');ok=false;}else{document.getElementById('err-r-terms').classList.remove('on');}
+  if(!ok)return;
+  var fullName=rv('r-fn')+' '+rv('r-ln');
+  if(regMode==='earlyaccess'){
+    document.getElementById('reg-body').style.display='none';
+    document.getElementById('reg-success').style.display='block';
+    document.getElementById('reg-modal').scrollTop=0;
+  } else if(regMode==='getstarted'){
+    closeReg();
+  } else {
+    closeReg();
+    setTimeout(function(){goDash(fullName);},450);
+  }
+}
+
+/* FIX #1 + #4: Pre-populate registration from D8 step 9 data */
+function prefillReg(){
+  var fn=vv('a1-fn'),ln=vv('a1-ln'),em=vv('a1-email');
+  if(fn&&!rv('r-fn'))document.getElementById('r-fn').value=fn;
+  if(ln&&!rv('r-ln'))document.getElementById('r-ln').value=ln;
+  if(em&&!rv('r-email'))document.getElementById('r-email').value=em;
+}
+
+/* ════════════════════════════════════════
+   D8 FORM
+════════════════════════════════════════ */
+var d8Overlay=document.getElementById('d8-overlay');
+var d8cur=1,d8tot=10,A={},dateOK=false;
+
+function openD8(){
+  d8Overlay.style.display='flex';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){d8Overlay.classList.add('visible');});});
+  document.body.style.overflow='hidden';
+}
+function closeD8(){
+  d8Overlay.classList.remove('visible');
+  setTimeout(function(){d8Overlay.style.display='none';document.body.style.overflow='';},400);
+}
+function handleD8Click(e){if(e.target===d8Overlay)closeD8();}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeD8();closeReg();}});
+
+function pick(el){
+  var g=el.getAttribute('data-g');
+  document.querySelectorAll('[data-g="'+g+'"]').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');A[g]=el.getAttribute('data-v');
+  var err=document.getElementById('err-'+g);if(err)err.classList.remove('on');
+}
+function tglCb(bId,cId){var c=document.getElementById(cId);c.checked=!c.checked;updCb(bId,c);}
+function updCb(bId,c){document.getElementById(bId).classList.toggle('on',c.checked);if(c.checked){var e=document.getElementById('err-'+c.id);if(e)e.classList.remove('on');}}
+function vv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function req(id,eid){var ok=!!vv(id);document.getElementById(id).classList.toggle('ERR',!ok);document.getElementById(eid).classList.toggle('on',!ok);return ok;}
+function reqSel(g){var ok=!!A[g];var e=document.getElementById('err-'+g);if(e)e.classList.toggle('on',!ok);return ok;}
+
+/* FIX #5: Marriage date validation — earliest = day AFTER first anniversary */
+function chkDate(){
+  var val=vv('marr-date');
+  var wb=document.getElementById('wbox-date'),ok=document.getElementById('okbox-date');
+  var em=document.getElementById('err-marr-date'),inp=document.getElementById('marr-date');
+  wb.classList.remove('on');ok.classList.remove('on');em.classList.remove('on');inp.classList.remove('ERR');
+  dateOK=false;
+  if(!val)return;
+  var md=new Date(val);if(isNaN(md))return;
+  var earliest=new Date(md.getFullYear()+1,md.getMonth(),md.getDate()+1);
+  var today=new Date();today.setHours(0,0,0,0);
+  if(today<earliest){
+    dateOK=false;
+    document.getElementById('earliest-txt').textContent=earliest.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+    wb.classList.add('on');
+  } else {
+    dateOK=true;ok.classList.add('on');
+  }
+}
+
+/* FIX #2: Postcode finder */
+function findPc(prefix){
+  var pcVal=(prefix==='sp'?vv('sp-pc'):vv('a1-pc')).replace(/\s/g,'').toUpperCase();
+  var listId=prefix+'-pc-list',list=document.getElementById(listId);
+  var a1id=prefix==='sp'?'sp-a1':'a1-a1';
+  var tnid=prefix==='sp'?'sp-town':'a1-town';
+  var cyid=prefix==='sp'?'sp-county':'a1-county';
+  var ptid=prefix==='sp'?'sp-post':'a1-post';
+  var ctid=prefix==='sp'?'sp-ctry':'a1-ctry';
+  if(pcVal.length<4){list.innerHTML='<div class="pc-item" style="color:rgba(255,180,160,0.8);pointer-events:none;">Please enter a valid postcode first</div>';list.classList.add('on');return;}
+  list.innerHTML='<div class="pc-item" style="color:rgba(255,255,255,0.4);pointer-events:none;">Searching…</div>';
+  list.classList.add('on');
+  fetch('https://api.postcodes.io/postcodes/'+pcVal)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status===200&&d.result){
+        var r=d.result;
+        var parish=r.parish&&r.parish!==r.admin_district?r.parish:'';
+        var opts=[
+          {label:'1 '+(parish||r.admin_district)+', '+r.admin_district+', '+r.postcode,a1:'1 '+(parish||r.admin_district),tn:r.admin_district,cy:r.admin_county||'',pt:r.postcode},
+          {label:'2 '+(parish||r.admin_district)+', '+r.admin_district+', '+r.postcode,a1:'2 '+(parish||r.admin_district),tn:r.admin_district,cy:r.admin_county||'',pt:r.postcode},
+          {label:'3 '+(parish||r.admin_district)+', '+r.admin_district+', '+r.postcode,a1:'3 '+(parish||r.admin_district),tn:r.admin_district,cy:r.admin_county||'',pt:r.postcode},
+        ];
+        list.innerHTML=opts.map(function(o){
+          return '<div class="pc-item" onclick="fillAddr(\''+a1id+'\',\''+tnid+'\',\''+cyid+'\',\''+ptid+'\',\''+ctid+'\',\''+o.a1+'\',\''+o.tn+'\',\''+o.cy+'\',\''+o.pt+'\')">'+o.label+'</div>';
+        }).join('')+'<div class="pc-item" style="color:rgba(255,255,255,0.35);" onclick="document.getElementById(\''+listId+'\').classList.remove(\'on\')">↓ Fill in manually instead</div>';
+      } else {
+        list.innerHTML='<div class="pc-item" style="color:rgba(255,180,160,0.8);pointer-events:none;">Postcode not found. Please fill in manually.</div>';
+        setTimeout(function(){list.classList.remove('on');},2200);
+      }
+    })
+    .catch(function(){
+      var demos=['1 High Street, '+pcVal,'2 Church Lane, '+pcVal,'3 Station Road, '+pcVal];
+      list.innerHTML=demos.map(function(addr,i){
+        return '<div class="pc-item" onclick="fillAddr(\''+a1id+'\',\''+tnid+'\',\''+cyid+'\',\''+ptid+'\',\''+ctid+'\',\''+(i+1)+' Demo Street\',\'London\',\'Greater London\',\''+pcVal+'\')">'+addr+'</div>';
+      }).join('')+'<div class="pc-item" style="color:rgba(255,255,255,0.3);font-size:11px;pointer-events:none;">Demo results — network unavailable</div>';
+    });
+}
+function fillAddr(a1id,tnid,cyid,ptid,ctid,a1,tn,cy,pt){
+  document.getElementById(a1id).value=a1;document.getElementById(tnid).value=tn;
+  document.getElementById(cyid).value=cy;document.getElementById(ptid).value=pt;document.getElementById(ctid).value='England';
+  document.querySelectorAll('.pc-list').forEach(function(l){l.classList.remove('on');});
+}
+
+/* FIX #1: Auto-populate step 9 from cert-n1 (Section 4.4) */
+function populateStep9(){
+  var certN1=vv('cert-n1');
+  var fnEl=document.getElementById('a1-fn'),lnEl=document.getElementById('a1-ln');
+  var any=false;
+  if(certN1&&!fnEl.value){
+    var parts=certN1.trim().split(/\s+/);
+    if(parts[0]){fnEl.value=parts[0];document.getElementById('badge-fn').classList.add('on');any=true;}
+    if(parts.length>1){lnEl.value=parts.slice(1).join(' ');document.getElementById('badge-ln').classList.add('on');any=true;}
+  }
+  if(any)document.getElementById('prefill-notice').style.display='block';
+}
+
+function validate(n){
+  var ok=true;
+  if(n===1){ok=reqSel('apptype')&reqSel('solejoint')&reqSel('cert')&reqSel('needtrans')&&ok;}
+  if(n===2){ok=req('sp-fn','err-sp-fn')&req('sp-ln','err-sp-ln')&reqSel('sp-certname')&req('sp-a1','err-sp-a1')&req('sp-town','err-sp-town')&req('sp-ctry','err-sp-ctry')&req('sp-post','err-sp-post')&reqSel('overseas')&&ok;}
+  if(n===3){
+    ok=reqSel('outsideuk')&&ok;
+    if(!vv('marr-date')){document.getElementById('marr-date').classList.add('ERR');document.getElementById('err-marr-date').classList.add('on');ok=false;}
+    else if(!dateOK){document.getElementById('wbox-date').classList.add('on');ok=false;}
+    else{document.getElementById('marr-date').classList.remove('ERR');document.getElementById('err-marr-date').classList.remove('on');}
+    ok=req('marr-place','err-marr-place')&req('cert-n1','err-cert-n1')&req('cert-n2','err-cert-n2')&reqSel('certcorrect')&reqSel('nocert')&&ok;
+  }
+  if(n===4){var jok=document.querySelectorAll('[name="juris"]:checked').length>0;document.getElementById('err-juris').classList.toggle('on',!jok);if(!jok)ok=false;}
+  if(n===5){var c1=document.getElementById('irr1').checked;document.getElementById('err-irr1').classList.toggle('on',!c1);if(!c1)ok=false;}
+  if(n===6){ok=reqSel('procs')&&ok;}
+  if(n===7){ok=reqSel('fin1')&&ok;}
+  if(n===8){ok=reqSel('feepay')&&ok;}
+  if(n===9){
+    ok=req('a1-fn','err-a1-fn')&req('a1-ln','err-a1-ln')&reqSel('a1-certname')&reqSel('a1-conf')&req('a1-a1','err-a1-a1')&req('a1-town','err-a1-town')&req('a1-ctry','err-a1-ctry')&req('a1-post','err-a1-post')&reqSel('hassol')&&ok;
+    var em=vv('a1-email');var eok=em&&/^[^@]+@[^@]+\.[^@]+$/.test(em);
+    document.getElementById('a1-email').classList.toggle('ERR',!eok);document.getElementById('err-a1-email').classList.toggle('on',!eok);if(!eok)ok=false;
+  }
+  return !!ok;
+}
+
+function saveStep(n){
+  if(n===2){A.spFn=vv('sp-fn');A.spLn=vv('sp-ln');A.spAddr=vv('sp-a1')+(vv('sp-a2')?' '+vv('sp-a2'):'');A.spTown=vv('sp-town');A.spPost=vv('sp-post');A.spEmail=vv('sp-email');}
+  if(n===3){A.marrDate=vv('marr-date');A.marrPlace=vv('marr-place');A.certN1=vv('cert-n1');A.certN2=vv('cert-n2');}
+  if(n===4){A.juris=Array.from(document.querySelectorAll('[name="juris"]:checked')).map(function(c){return c.value;}).join(', ');}
+  if(n===6){A.caseNums=vv('case-nums');A.procSumm=vv('proc-summ');}
+  if(n===8){A.hwfRef=vv('hwf-ref');}
+  if(n===9){A.a1Fn=vv('a1-fn');A.a1Ln=vv('a1-ln');A.a1Addr=vv('a1-a1')+(vv('a1-a2')?' '+vv('a1-a2'):'');A.a1Town=vv('a1-town');A.a1Post=vv('a1-post');A.a1Email=vv('a1-email');}
+}
+
+function nxt(n){
+  if(!validate(n))return;
+  saveStep(n);
+  if(n===8)populateStep9(); // FIX #1
+  if(n===9)buildReview();
+  goStep(n+1);
+}
+function bck(n){goStep(n-1);}
+function goStep(n){
+  document.getElementById('p'+d8cur).classList.remove('active');d8cur=n;
+  document.getElementById('p'+d8cur).classList.add('active');
+  document.getElementById('si').textContent=n;
+  document.getElementById('fbar').style.width=(n/d8tot*100)+'%';
+  document.getElementById('d8-modal').scrollTop=0;
+}
+
+var FM={apptype:{divorce:'Divorce',dissolution:'Dissolution'},solejoint:{sole:'Sole',joint:'Joint'},cert:{yes:'Have cert',no:'Need to obtain'},needtrans:{yes:'Translation required',no:'No translation'},'sp-certname':{yes:'Yes',no:'Changed'},overseas:{no:'England & Wales',yes:'Overseas'},outsideuk:{no:'UK',yes:'Outside UK'},certcorrect:{yes:'Correct',no:'Incorrect'},nocert:{no:'Has cert',yes:'Separate application'},procs:{no:'No',yes:'Yes'},fin1:{self:'For myself',children:'For children',both:'For both',no:'No'},feepay:{card:'Debit/credit card',hwf:'HWF online','hwf-form':'HWF EX160',cheque:'Cheque'},'a1-certname':{yes:'Yes',no:'Changed'},'a1-conf':{yes:'Confidential',no:'Not confidential'},hassol:{no:'No solicitor',yes:'Has solicitor'}};
+function fmt(g,v){return(FM[g]&&FM[g][v])||v||'—';}
+function rr(k,v){return '<div class="rev-row"><div class="rk">'+k+'</div><div class="rv">'+(v||'—')+'</div></div>';}
+function rs(t,rows){return '<div class="rev-sec"><div class="rev-lbl">'+t+'</div>'+rows.join('')+'</div>';}
+function buildReview(){
+  var h='';
+  h+=rs('Application',[rr('Type',fmt('apptype',A.apptype)),rr('Sole/joint',fmt('solejoint',A.solejoint)),rr('Certificate',fmt('cert',A.cert))]);
+  h+=rs('Respondent',[rr('Name',(A.spFn||'')+' '+(A.spLn||'')),rr('Address',(A.spAddr||'')+', '+(A.spTown||'')),rr('Email',A.spEmail||'—')]);
+  h+=rs('Marriage',[rr('Date',A.marrDate||''),rr('Place',A.marrPlace||''),rr('Cert correct',fmt('certcorrect',A.certcorrect))]);
+  h+=rs('Jurisdiction',[rr('Grounds',A.juris||'—')]);
+  h+=rs('Irretrievable breakdown',[rr('Ground','No-fault — irretrievable breakdown'),rr('Confirmed',document.getElementById('irr1').checked?'Yes':'No')]);
+  h+=rs('Financial orders',[rr('Applicant 1',fmt('fin1',A.fin1))]);
+  h+=rs('Court fee',[rr('Payment',fmt('feepay',A.feepay))]);
+  h+=rs('Your details',[rr('Name',(A.a1Fn||'')+' '+(A.a1Ln||'')),rr('Address',(A.a1Addr||'')+', '+(A.a1Town||''),),rr('Email',A.a1Email||''),rr('Solicitor',fmt('hassol',A.hassol))]);
+  document.getElementById('rev-content').innerHTML=h;
+}
+function doSubmit(){
+  if(!document.getElementById('sot').checked){document.getElementById('err-sot').classList.add('on');return;}
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('d8-succ').style.display='block';
+  document.getElementById('fbar').style.width='100%';document.getElementById('si').textContent='✓';
+  // FIX #1+#4: pre-fill reg with D8 data
+  prefillReg();
+}
+function resetD8(){
+  document.getElementById('d8-succ').style.display='none';d8cur=1;A={};dateOK=false;
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('p1').classList.add('active');
+  document.getElementById('si').textContent='1';document.getElementById('fbar').style.width='10%';
+}
+</script>
+
+<!-- ══ N1 SMALL CLAIMS MODAL ══ -->
+<div id="n1-overlay" onclick="handleN1Click(event)" style="position:fixed;inset:0;z-index:9999;background:rgba(5,10,20,0);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;transition:background 0.4s;">
+  <div id="n1-modal" style="width:100%;max-width:700px;min-height:100vh;background:var(--ink);display:flex;flex-direction:column;transform:translateY(30px);opacity:0;transition:transform 0.45s cubic-bezier(0.25,0,0,1),opacity 0.35s;">
+
+    <!-- N1 HEADER -->
+    <div class="fh">
+      <div class="flogo"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+      <div class="fstep">N1 Small Claims &nbsp;·&nbsp; Step <span id="n1-si">1</span> of 7</div>
+      <button class="fclose" onclick="closeN1()">✕</button>
+    </div>
+    <div class="fprog"><div class="fbar" id="n1-bar" style="width:14.2%"></div></div>
+
+    <div class="fbody">
+
+      <!-- N1 STEP 1: Claimant details -->
+      <div class="panel active" id="n1p1">
+        <div class="ey">N1 Claim Form — Claimant details</div>
+        <div class="ttl">About you<br><em>(the claimant)</em></div>
+        <div class="sub">You are the person or business making the claim. The court will use these details to contact you and send you documents.</div>
+        <div class="ibox"><strong>Tip:</strong> You can issue your claim online at <strong>www.moneyclaims.service.gov.uk</strong> which may save time and money. Use this form to prepare your claim with AI assistance first.</div>
+        <div class="row2">
+          <div class="field"><label>First name</label><input type="text" id="n1-c-fn" placeholder="First name"><div class="em" id="err-n1-c-fn">Required</div></div>
+          <div class="field"><label>Last name / company name</label><input type="text" id="n1-c-ln" placeholder="Last name or company name"><div class="em" id="err-n1-c-ln">Required</div></div>
+        </div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Are you claiming as:</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-claimant-type" data-v="individual" onclick="n1pick(this)"><div class="ct">An individual</div><div class="cs">Personal claim</div></div>
+          <div class="choice" data-g="n1-claimant-type" data-v="business" onclick="n1pick(this)"><div class="ct">A business / company</div><div class="cs">Commercial claim</div></div>
+        </div>
+        <div class="em" id="err-n1-claimant-type" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field"><label>Building and street</label><input type="text" id="n1-c-a1" placeholder="Building and street"><div class="em" id="err-n1-c-a1">Required</div></div>
+        <div class="field"><label>Second line (optional)</label><input type="text" id="n1-c-a2"></div>
+        <div class="row2">
+          <div class="field"><label>Town or city</label><input type="text" id="n1-c-town"><div class="em" id="err-n1-c-town">Required</div></div>
+          <div class="field"><label>County (optional)</label><input type="text" id="n1-c-county"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Postcode</label><input type="text" id="n1-c-post" oninput="this.value=this.value.toUpperCase()"><div class="em" id="err-n1-c-post">Required</div></div>
+          <div class="field"><label>Country</label><input type="text" id="n1-c-ctry" value="England"></div>
+        </div>
+        <div class="field"><label>Phone number</label><input type="tel" id="n1-c-phone" placeholder="+44 7700 900000"></div>
+        <div class="field"><label>Email address <span style="color:var(--gold);">*</span></label><input type="email" id="n1-c-email" placeholder="your@email.com"><div class="em" id="err-n1-c-email">Valid email required</div></div>
+        <div class="field"><label>Your reference (optional)</label><input type="text" id="n1-c-ref" placeholder="e.g. invoice number, case ref"></div>
+        <div class="fnav"><button class="bnx" onclick="n1nxt(1)">Continue →</button></div>
+      </div>
+
+      <!-- N1 STEP 2: Defendant details -->
+      <div class="panel" id="n1p2">
+        <div class="ey">N1 Claim Form — Defendant details</div>
+        <div class="ttl">About the defendant<br><em>(who you are claiming against)</em></div>
+        <div class="sub">The defendant is the person or business you are making the claim against. The court will serve documents on them at the address you provide.</div>
+        <div class="row2">
+          <div class="field"><label>First name</label><input type="text" id="n1-d-fn" placeholder="First name"><div class="em" id="err-n1-d-fn">Required</div></div>
+          <div class="field"><label>Last name / company name</label><input type="text" id="n1-d-ln" placeholder="Last name or company name"><div class="em" id="err-n1-d-ln">Required</div></div>
+        </div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Defendant type</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-def-type" data-v="individual" onclick="n1pick(this)"><div class="ct">Individual person</div></div>
+          <div class="choice" data-g="n1-def-type" data-v="company" onclick="n1pick(this)"><div class="ct">Company / business</div></div>
+        </div>
+        <div class="em" id="err-n1-def-type" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field"><label>Building and street</label><input type="text" id="n1-d-a1" placeholder="Building and street"><div class="em" id="err-n1-d-a1">Required</div></div>
+        <div class="field"><label>Second line (optional)</label><input type="text" id="n1-d-a2"></div>
+        <div class="row2">
+          <div class="field"><label>Town or city</label><input type="text" id="n1-d-town"><div class="em" id="err-n1-d-town">Required</div></div>
+          <div class="field"><label>County (optional)</label><input type="text" id="n1-d-county"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Postcode</label><input type="text" id="n1-d-post" oninput="this.value=this.value.toUpperCase()"><div class="em" id="err-n1-d-post">Required</div></div>
+          <div class="field"><label>Country</label><input type="text" id="n1-d-ctry" value="England"></div>
+        </div>
+        <div class="field"><label>Defendant's email (optional)</label><input type="email" id="n1-d-email" placeholder="defendant@email.com"></div>
+        <div class="fnav"><button class="bbk" onclick="n1bck(2)">← Back</button><button class="bnx" onclick="n1nxt(2)">Continue →</button></div>
+      </div>
+
+      <!-- N1 STEP 3: Claim details -->
+      <div class="panel" id="n1p3">
+        <div class="ey">N1 Claim Form — Details of claim</div>
+        <div class="ttl">What is your<br><em>claim about?</em></div>
+        <div class="sub">Describe what happened and why you are owed money. Be clear and factual — include dates, amounts, and what the defendant failed to do.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Category of claim</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-category" data-v="unpaid-invoice" onclick="n1pick(this)"><div class="ct">Unpaid invoice / debt</div><div class="cs">Money owed for goods or services</div></div>
+          <div class="choice" data-g="n1-category" data-v="faulty-goods" onclick="n1pick(this)"><div class="ct">Faulty goods / services</div><div class="cs">Goods or services not as described</div></div>
+          <div class="choice" data-g="n1-category" data-v="deposit" onclick="n1pick(this)"><div class="ct">Unreturned deposit</div><div class="cs">Deposit not returned</div></div>
+          <div class="choice" data-g="n1-category" data-v="contract" onclick="n1pick(this)"><div class="ct">Breach of contract</div><div class="cs">Contract terms not fulfilled</div></div>
+          <div class="choice" data-g="n1-category" data-v="other" onclick="n1pick(this)"><div class="ct">Other money claim</div><div class="cs">Other civil money dispute</div></div>
+        </div>
+        <div class="em" id="err-n1-category" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field">
+          <label>Brief details of claim <span style="color:var(--gold);">*</span></label>
+          <textarea id="n1-brief" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;resize:vertical;min-height:120px;transition:border-color 0.2s;" placeholder="e.g. The defendant owes me £850 for web design services completed on 15 January 2026 under invoice number INV-2026-001. Payment was due on 29 January 2026 and has not been received despite two written reminders dated 5 February and 20 February 2026."></textarea>
+          <div class="em" id="err-n1-brief">Please describe your claim — at least 20 characters</div>
+        </div>
+        <div class="field">
+          <label>Preferred County Court Hearing Centre</label>
+          <input type="text" id="n1-court" placeholder="e.g. Central London County Court">
+          <div class="em" id="err-n1-court">Required</div>
+        </div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Does your claim include issues under the Human Rights Act 1998?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-hra" data-v="no" onclick="n1pick(this)"><div class="ct">No</div></div>
+          <div class="choice" data-g="n1-hra" data-v="yes" onclick="n1pick(this)"><div class="ct">Yes</div><div class="cs">Please be prepared to explain</div></div>
+        </div>
+        <div class="em" id="err-n1-hra" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Do you or a witness have any vulnerability the court should consider?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-vuln" data-v="no" onclick="n1pick(this);document.getElementById('n1-vuln-det').style.display='none'"><div class="ct">No</div></div>
+          <div class="choice" data-g="n1-vuln" data-v="yes" onclick="n1pick(this);document.getElementById('n1-vuln-det').style.display='block'"><div class="ct">Yes — please explain</div></div>
+        </div>
+        <div class="em" id="err-n1-vuln" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="n1-vuln-det" style="display:none;">
+          <div class="field"><label>Please explain</label><textarea id="n1-vuln-txt" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;resize:vertical;min-height:80px;" placeholder="Describe the vulnerability and what adjustments are needed…"></textarea></div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="n1bck(3)">← Back</button><button class="bnx" onclick="n1nxt(3)">Continue →</button></div>
+      </div>
+
+      <!-- N1 STEP 4: Value & amounts -->
+      <div class="panel" id="n1p4">
+        <div class="ey">N1 Claim Form — Value of claim</div>
+        <div class="ttl">The value of<br><em>your claim</em></div>
+        <div class="sub">Enter the amounts you are claiming. Small claims track covers claims up to £10,000. The court fee is calculated automatically based on the amount claimed.</div>
+        <div class="ibox">
+          <strong>Court fee guide (2026):</strong> Up to £300 = £35 · £300–£500 = £50 · £500–£1,000 = £70 · £1,000–£1,500 = £80 · £1,500–£3,000 = £115 · £3,000–£5,000 = £185 · £5,000–£10,000 = £410. You may qualify for Help with Fees (form EX160).
+        </div>
+        <div class="row2">
+          <div class="field"><label>Amount claimed (£)</label><input type="number" id="n1-amount" placeholder="e.g. 850.00" min="0" step="0.01" oninput="calcN1Fee()"><div class="em" id="err-n1-amount">Required — enter amount in pounds</div></div>
+          <div class="field"><label>Court fee (£) — auto-calculated</label><input type="text" id="n1-fee" placeholder="Auto-calculated" readonly style="opacity:0.6;cursor:not-allowed;background:rgba(245,200,66,0.05);border-color:rgba(245,200,66,0.2);"></div>
+        </div>
+        <div class="field"><label>Interest claimed (£) — optional</label><input type="number" id="n1-interest" placeholder="0.00" min="0" step="0.01" oninput="calcN1Fee()"></div>
+        <div class="field"><label>Legal representative's costs (£) — optional</label><input type="number" id="n1-legal-costs" placeholder="0.00" min="0" step="0.01" oninput="calcN1Fee()"></div>
+        <div class="field" style="background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.18);border-radius:8px;padding:14px 16px;">
+          <label style="color:rgba(245,200,66,0.75)!important;">Total amount (£)</label>
+          <input type="text" id="n1-total" readonly style="background:transparent;border:none;border-radius:0;font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);padding:4px 0;font-weight:400;">
+        </div>
+        <div style="margin-top:16px;" class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">How will you pay the court fee?</div>
+        <div class="choices" style="margin-bottom:14px;margin-top:10px;">
+          <div class="choice" data-g="n1-feepay" data-v="card" onclick="n1pick(this);document.getElementById('n1-hwf-det').style.display='none'"><div class="ct">Debit or credit card</div><div class="cs">Court will contact you to take payment</div></div>
+          <div class="choice" data-g="n1-feepay" data-v="hwf" onclick="n1pick(this);document.getElementById('n1-hwf-det').style.display='block'"><div class="ct">Help with Fees (online)</div><div class="cs">I have a HWF reference number</div></div>
+          <div class="choice" data-g="n1-feepay" data-v="hwf-form" onclick="n1pick(this);document.getElementById('n1-hwf-det').style.display='none'"><div class="ct">Help with Fees (EX160 form)</div></div>
+          <div class="choice" data-g="n1-feepay" data-v="fee-acct" onclick="n1pick(this);document.getElementById('n1-hwf-det').style.display='none'"><div class="ct">Fee account</div><div class="cs">Legal professionals only</div></div>
+        </div>
+        <div class="em" id="err-n1-feepay" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="n1-hwf-det" style="display:none;"><div class="field"><label>HWF reference number</label><input type="text" id="n1-hwf-ref" placeholder="HWF-XXXXXXX"></div></div>
+        <div class="fnav"><button class="bbk" onclick="n1bck(4)">← Back</button><button class="bnx" onclick="n1nxt(4)">Continue →</button></div>
+      </div>
+
+      <!-- N1 STEP 5: Particulars of claim -->
+      <div class="panel" id="n1p5">
+        <div class="ey">N1 Claim Form — Particulars of claim</div>
+        <div class="ttl">Particulars<br><em>of claim</em></div>
+        <div class="sub">This is the detailed legal narrative of your claim. It should set out the facts you rely on clearly. Our AI will help structure this based on your earlier answers.</div>
+        <div class="ibox">The particulars of claim must: (1) state the nature of the claim, (2) identify the relevant events and dates, (3) state the remedy sought. Keep it factual and concise.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Are your particulars of claim:</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-poc-status" data-v="attached" onclick="n1pick(this);document.getElementById('n1-poc-box').style.display='block'"><div class="ct">Attached — include here</div></div>
+          <div class="choice" data-g="n1-poc-status" data-v="to-follow" onclick="n1pick(this);document.getElementById('n1-poc-box').style.display='none'"><div class="ct">To follow separately</div><div class="cs">Must be served within 14 days</div></div>
+        </div>
+        <div class="em" id="err-n1-poc-status" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="n1-poc-box" style="display:none;">
+          <div class="field">
+            <label>Particulars of claim</label>
+            <textarea id="n1-poc" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;outline:none;resize:vertical;min-height:200px;line-height:1.8;transition:border-color 0.2s;" placeholder="e.g.&#10;&#10;1. The Claimant contracted the Defendant for web design services under a written agreement dated 1 December 2025.&#10;&#10;2. The Claimant performed the contracted services and delivered the completed work on 15 January 2026.&#10;&#10;3. The Defendant was invoiced £850 (Invoice No. INV-2026-001) with payment due by 29 January 2026.&#10;&#10;4. Despite written reminders dated 5 February 2026 and 20 February 2026, the Defendant has failed to pay.&#10;&#10;5. The Claimant claims £850 plus statutory interest pursuant to s.69 County Courts Act 1984.&#10;&#10;AND the Claimant claims: (1) £850 principal sum; (2) interest; (3) court fee; (4) costs."></textarea>
+            <div class="em" id="err-n1-poc">Please enter your particulars of claim or select 'to follow'</div>
+          </div>
+          <button style="background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.25);color:var(--gold);padding:10px 20px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;margin-bottom:16px;" onclick="generatePOC()">✦ AI-draft particulars for me →</button>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="n1bck(5)">← Back</button><button class="bnx" onclick="n1nxt(5)">Continue →</button></div>
+      </div>
+
+      <!-- N1 STEP 6: Statement of truth + solicitor details -->
+      <div class="panel" id="n1p6">
+        <div class="ey">N1 Claim Form — Statement of truth</div>
+        <div class="ttl">Sign your<br><em>statement of truth</em></div>
+        <div class="sub">You must verify your claim form with a statement of truth. Proceedings for contempt of court may be brought if you make a false statement.</div>
+        <div class="ibox"><strong>Statement of truth:</strong> I understand that proceedings for contempt of court may be brought against a person who makes, or causes to be made, a false statement in a document verified by a statement of truth without an honest belief in its truth.</div>
+        <label class="cbx" id="n1-cb-sot1" onclick="n1tglCb('n1-cb-sot1','n1-sot1')">
+          <input type="checkbox" id="n1-sot1" onchange="n1updCb('n1-cb-sot1',this)">
+          <span><strong>I believe</strong> that the facts stated in this claim form and any attached sheets are true.</span>
+        </label>
+        <div class="em" id="err-n1-sot1" style="margin-bottom:10px;">You must confirm this to proceed</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;margin-top:6px;">Signed by</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="n1-signed-by" data-v="claimant" onclick="n1pick(this);document.getElementById('n1-sol-box').style.display='none'"><div class="ct">Claimant</div><div class="cs">I am signing personally</div></div>
+          <div class="choice" data-g="n1-signed-by" data-v="solicitor" onclick="n1pick(this);document.getElementById('n1-sol-box').style.display='block'"><div class="ct">Legal representative</div><div class="cs">Solicitor or authorised person</div></div>
+        </div>
+        <div class="em" id="err-n1-signed-by" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="n1-sol-box" style="display:none;">
+          <div class="field"><label>Full name of person signing</label><input type="text" id="n1-sol-name" placeholder="Full name"></div>
+          <div class="field"><label>Name of firm</label><input type="text" id="n1-sol-firm" placeholder="Firm name"></div>
+          <div class="field"><label>Position / office held</label><input type="text" id="n1-sol-pos" placeholder="e.g. Partner, Solicitor"></div>
+        </div>
+        <div class="field"><label>Full name of claimant signing</label><input type="text" id="n1-sign-name" placeholder="Your full name"><div class="em" id="err-n1-sign-name">Required</div></div>
+        <div class="fnav"><button class="bbk" onclick="n1bck(6)">← Back</button><button class="bnx" onclick="n1nxt(6)">Review →</button></div>
+      </div>
+
+      <!-- N1 STEP 7: Review & Submit -->
+      <div class="panel" id="n1p7">
+        <div class="ey">N1 Claim Form — Review & submit</div>
+        <div class="ttl">Review your<br><em>claim form</em></div>
+        <div class="sub">Please review all details carefully. Once submitted, solnlaw ai will prepare your N1 form and advise on next steps.</div>
+        <div id="n1-rev"></div>
+        <div style="margin-top:20px;"><div class="ibox"><strong>Note:</strong> A copy of this claim form must be served on all other parties. The court will advise you on service.</div></div>
+        <button class="bsub" onclick="submitN1()" style="margin-top:8px;">Submit N1 Claim →</button>
+        <div class="fnav" style="margin-top:16px;justify-content:flex-start;"><button class="bbk" onclick="n1bck(7)">← Edit answers</button></div>
+      </div>
+
+      <!-- N1 SUCCESS -->
+      <div id="n1-succ" style="display:none;text-align:center;padding:80px 20px;">
+        <div style="width:52px;height:52px;border:1.5px solid rgba(245,200,66,0.4);border-radius:50%;display:flex;align-items:center;justify-content:justify-content:center;align-items:center;justify-content:center;margin:0 auto 24px;"><svg width="20" height="20" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:#fff;margin-bottom:14px;">Claim submitted</div>
+        <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.8;max-width:420px;margin:0 auto 32px;">Your N1 small claim has been received. A member of the solnlaw ai team will be in touch within 24 hours with your completed claim form and advice on filing with the court.</div>
+        <button style="background:transparent;border:1px solid rgba(245,200,66,0.3);color:var(--gold);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-right:10px;" onclick="closeN1()">← Back to services</button>
+        <button style="background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;" onclick="resetN1()">New claim</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   N1 SMALL CLAIMS FORM LOGIC
+════════════════════════════════════════ */
+var n1Overlay=document.getElementById('n1-overlay');
+var n1cur=1,n1tot=7,N1={};
+
+function openN1(){
+  n1Overlay.style.display='flex';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    n1Overlay.style.background='rgba(5,10,20,0.97)';
+    document.getElementById('n1-modal').style.transform='translateY(0)';
+    document.getElementById('n1-modal').style.opacity='1';
+  });});
+  document.body.style.overflow='hidden';
+}
+function closeN1(){
+  n1Overlay.style.background='rgba(5,10,20,0)';
+  document.getElementById('n1-modal').style.transform='translateY(30px)';
+  document.getElementById('n1-modal').style.opacity='0';
+  setTimeout(function(){n1Overlay.style.display='none';document.body.style.overflow='';},400);
+}
+function handleN1Click(e){if(e.target===n1Overlay)closeN1();}
+
+function n1pick(el){
+  var g=el.getAttribute('data-g');
+  document.querySelectorAll('[data-g="'+g+'"]').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');N1[g]=el.getAttribute('data-v');
+  var err=document.getElementById('err-'+g);if(err)err.classList.remove('on');
+}
+function n1tglCb(bId,cId){var c=document.getElementById(cId);c.checked=!c.checked;n1updCb(bId,c);}
+function n1updCb(bId,c){document.getElementById(bId).classList.toggle('on',c.checked);if(c.checked){var e=document.getElementById('err-'+c.id);if(e)e.classList.remove('on');}}
+function n1v(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function n1req(id,eid){var ok=!!n1v(id);var el=document.getElementById(id);if(el)el.classList.toggle('ERR',!ok);var em=document.getElementById(eid);if(em)em.classList.toggle('on',!ok);return ok;}
+function n1reqSel(g){var ok=!!N1[g];var e=document.getElementById('err-'+g);if(e)e.classList.toggle('on',!ok);return ok;}
+
+/* Court fee calculator */
+function calcN1Fee(){
+  var amt=parseFloat(document.getElementById('n1-amount').value)||0;
+  var interest=parseFloat(document.getElementById('n1-interest').value)||0;
+  var lc=parseFloat(document.getElementById('n1-legal-costs').value)||0;
+  var fee=0;
+  if(amt<=300)fee=35;
+  else if(amt<=500)fee=50;
+  else if(amt<=1000)fee=70;
+  else if(amt<=1500)fee=80;
+  else if(amt<=3000)fee=115;
+  else if(amt<=5000)fee=185;
+  else if(amt<=10000)fee=410;
+  else fee=Math.round(amt*0.05);
+  document.getElementById('n1-fee').value=fee>0?'£'+fee.toFixed(2):'';
+  var total=amt+fee+interest+lc;
+  document.getElementById('n1-total').value=total>0?'£'+total.toFixed(2):'';
+  N1.fee=fee;N1.total=total;
+}
+
+/* AI draft POC */
+function generatePOC(){
+  var cat=N1['n1-category']||'claim';
+  var brief=n1v('n1-brief');
+  var amt=n1v('n1-amount');
+  var cln=(n1v('n1-c-fn')+' '+n1v('n1-c-ln')).trim()||'the Claimant';
+  var def=(n1v('n1-d-fn')+' '+n1v('n1-d-ln')).trim()||'the Defendant';
+  var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  var poc='1. The Claimant is '+cln+'.\n\n';
+  poc+='2. The Defendant is '+def+'.\n\n';
+  if(cat==='unpaid-invoice'){poc+='3. The Claimant provided goods and/or services to the Defendant. The sum of £'+amt+' became due and payable but has not been paid.\n\n';}
+  else if(cat==='faulty-goods'){poc+='3. The Defendant supplied goods and/or services to the Claimant which were not of satisfactory quality and/or not as described, causing the Claimant loss of £'+amt+'.\n\n';}
+  else if(cat==='deposit'){poc+='3. The Claimant paid a deposit of £'+amt+' to the Defendant. The Defendant has failed to return the deposit without lawful reason.\n\n';}
+  else if(cat==='contract'){poc+='3. The Defendant breached a contract with the Claimant, causing loss in the sum of £'+amt+'.\n\n';}
+  else{poc+='3. The Defendant is indebted to the Claimant in the sum of £'+amt+' as set out in the brief details of claim above.\n\n';}
+  poc+='4. '+brief+'\n\n';
+  poc+='5. Despite demand, the Defendant has failed and/or refused to make payment.\n\n';
+  poc+='AND the Claimant claims:\n(1) £'+amt+' (principal sum);\n(2) Interest pursuant to section 69 of the County Courts Act 1984;\n(3) Court fees;\n(4) Such further relief as the court thinks fit.';
+  document.getElementById('n1-poc').value=poc;
+}
+
+function n1validate(n){
+  var ok=true;
+  if(n===1){
+    ok=n1req('n1-c-fn','err-n1-c-fn')&n1req('n1-c-ln','err-n1-c-ln')&n1reqSel('n1-claimant-type')&n1req('n1-c-a1','err-n1-c-a1')&n1req('n1-c-town','err-n1-c-town')&n1req('n1-c-post','err-n1-c-post')&&ok;
+    var em=n1v('n1-c-email');var eok=em&&/^[^@]+@[^@]+\.[^@]+$/.test(em);
+    var el=document.getElementById('n1-c-email');if(el)el.classList.toggle('ERR',!eok);
+    var emEl=document.getElementById('err-n1-c-email');if(emEl)emEl.classList.toggle('on',!eok);if(!eok)ok=false;
+  }
+  if(n===2){ok=n1req('n1-d-fn','err-n1-d-fn')&n1req('n1-d-ln','err-n1-d-ln')&n1reqSel('n1-def-type')&n1req('n1-d-a1','err-n1-d-a1')&n1req('n1-d-town','err-n1-d-town')&n1req('n1-d-post','err-n1-d-post')&&ok;}
+  if(n===3){
+    ok=n1reqSel('n1-category')&&ok;
+    var brief=n1v('n1-brief');var bok=brief.length>=20;
+    var bel=document.getElementById('n1-brief');if(bel)bel.classList.toggle('ERR',!bok);
+    var bem=document.getElementById('err-n1-brief');if(bem)bem.classList.toggle('on',!bok);if(!bok)ok=false;
+    ok=n1req('n1-court','err-n1-court')&n1reqSel('n1-hra')&n1reqSel('n1-vuln')&&ok;
+  }
+  if(n===4){
+    var amt=parseFloat(n1v('n1-amount'));var aok=!isNaN(amt)&&amt>0;
+    var ael=document.getElementById('n1-amount');if(ael)ael.classList.toggle('ERR',!aok);
+    var aem=document.getElementById('err-n1-amount');if(aem)aem.classList.toggle('on',!aok);if(!aok)ok=false;
+    ok=n1reqSel('n1-feepay')&&ok;
+  }
+  if(n===5){
+    if(N1['n1-poc-status']==='attached'){
+      var poc=n1v('n1-poc');var pok=poc.length>=20;
+      var pel=document.getElementById('n1-poc');if(pel)pel.classList.toggle('ERR',!pok);
+      var pem=document.getElementById('err-n1-poc');if(pem)pem.classList.toggle('on',!pok);if(!pok)ok=false;
+    } else {ok=n1reqSel('n1-poc-status')&&ok;}
+    if(!N1['n1-poc-status']){ok=n1reqSel('n1-poc-status')&&ok;}
+  }
+  if(n===6){
+    var sot=document.getElementById('n1-sot1').checked;
+    var sotem=document.getElementById('err-n1-sot1');if(sotem)sotem.classList.toggle('on',!sot);if(!sot)ok=false;
+    ok=n1reqSel('n1-signed-by')&n1req('n1-sign-name','err-n1-sign-name')&&ok;
+  }
+  return !!ok;
+}
+
+function n1saveStep(n){
+  if(n===1){N1.cFn=n1v('n1-c-fn');N1.cLn=n1v('n1-c-ln');N1.cAddr=n1v('n1-c-a1')+(n1v('n1-c-a2')?' '+n1v('n1-c-a2'):'');N1.cTown=n1v('n1-c-town');N1.cPost=n1v('n1-c-post');N1.cEmail=n1v('n1-c-email');N1.cPhone=n1v('n1-c-phone');N1.cRef=n1v('n1-c-ref');}
+  if(n===2){N1.dFn=n1v('n1-d-fn');N1.dLn=n1v('n1-d-ln');N1.dAddr=n1v('n1-d-a1')+(n1v('n1-d-a2')?' '+n1v('n1-d-a2'):'');N1.dTown=n1v('n1-d-town');N1.dPost=n1v('n1-d-post');N1.dEmail=n1v('n1-d-email');}
+  if(n===3){N1.brief=n1v('n1-brief');N1.court=n1v('n1-court');}
+  if(n===4){N1.amount=n1v('n1-amount');N1.hwfRef=n1v('n1-hwf-ref');calcN1Fee();}
+  if(n===5){N1.poc=n1v('n1-poc');}
+  if(n===6){N1.signName=n1v('n1-sign-name');N1.solFirm=n1v('n1-sol-firm');}
+}
+
+function n1nxt(n){
+  if(!n1validate(n))return;
+  n1saveStep(n);
+  if(n===6)n1buildReview();
+  n1goStep(n+1);
+}
+function n1bck(n){n1goStep(n-1);}
+function n1goStep(n){
+  document.getElementById('n1p'+n1cur).classList.remove('active');n1cur=n;
+  document.getElementById('n1p'+n1cur).classList.add('active');
+  document.getElementById('n1-si').textContent=n;
+  document.getElementById('n1-bar').style.width=(n/n1tot*100)+'%';
+  document.getElementById('n1-modal').scrollTop=0;
+}
+
+var N1FM={
+  'n1-claimant-type':{individual:'Individual',business:'Business/company'},
+  'n1-def-type':{individual:'Individual',company:'Company/business'},
+  'n1-category':{'unpaid-invoice':'Unpaid invoice/debt','faulty-goods':'Faulty goods/services','deposit':'Unreturned deposit','contract':'Breach of contract','other':'Other money claim'},
+  'n1-hra':{no:'No',yes:'Yes'},
+  'n1-vuln':{no:'No',yes:'Yes — see notes'},
+  'n1-poc-status':{attached:'Attached with form','to-follow':'To follow within 14 days'},
+  'n1-signed-by':{claimant:'Claimant',solicitor:'Legal representative'},
+  'n1-feepay':{card:'Debit/credit card',hwf:'HWF online','hwf-form':'HWF EX160','fee-acct':'Fee account'},
+};
+function n1fmt(g,v){return(N1FM[g]&&N1FM[g][v])||v||'—';}
+function n1rr(k,v){return '<div class="rev-row"><div class="rk">'+k+'</div><div class="rv">'+(v||'—')+'</div></div>';}
+function n1rs(t,rows){return '<div class="rev-sec"><div class="rev-lbl">'+t+'</div>'+rows.join('')+'</div>';}
+
+function n1buildReview(){
+  var h='';
+  h+=n1rs('Claimant',[n1rr('Name',(N1.cFn||'')+' '+(N1.cLn||'')),n1rr('Type',n1fmt('n1-claimant-type',N1['n1-claimant-type'])),n1rr('Address',(N1.cAddr||'')+', '+(N1.cTown||'')+' '+(N1.cPost||'')),n1rr('Email',N1.cEmail||'—'),n1rr('Phone',N1.cPhone||'—'),n1rr('Your ref',N1.cRef||'—')]);
+  h+=n1rs('Defendant',[n1rr('Name',(N1.dFn||'')+' '+(N1.dLn||'')),n1rr('Type',n1fmt('n1-def-type',N1['n1-def-type'])),n1rr('Address',(N1.dAddr||'')+', '+(N1.dTown||'')+' '+(N1.dPost||'')),n1rr('Email',N1.dEmail||'—')]);
+  h+=n1rs('Claim details',[n1rr('Category',n1fmt('n1-category',N1['n1-category'])),n1rr('Brief details',N1.brief||'—'),n1rr('Hearing centre',N1.court||'—'),n1rr('Human Rights Act',n1fmt('n1-hra',N1['n1-hra']))]);
+  h+=n1rs('Value',[n1rr('Amount claimed','£'+(N1.amount||'0')),n1rr('Court fee','£'+(N1.fee?N1.fee.toFixed(2):'0.00')),n1rr('Total','£'+(N1.total?N1.total.toFixed(2):'0.00')),n1rr('Fee payment',n1fmt('n1-feepay',N1['n1-feepay']))]);
+  h+=n1rs('Particulars of claim',[n1rr('Status',n1fmt('n1-poc-status',N1['n1-poc-status'])),n1rr('Particulars',(N1.poc||'To follow').substring(0,120)+'…')]);
+  h+=n1rs('Statement of truth',[n1rr('Signed by',n1fmt('n1-signed-by',N1['n1-signed-by'])),n1rr('Full name',N1.signName||'—'),n1rr('Firm',N1.solFirm||'—'),n1rr('Confirmed',document.getElementById('n1-sot1').checked?'Yes — I believe the facts are true':'No')]);
+  document.getElementById('n1-rev').innerHTML=h;
+}
+
+function submitN1(){
+  document.querySelectorAll('#n1-modal .panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('n1-succ').style.display='block';
+  document.getElementById('n1-bar').style.width='100%';
+  document.getElementById('n1-si').textContent='✓';
+  // Pre-fill registration with claimant details
+  if(N1.cFn&&!rv('r-fn'))document.getElementById('r-fn').value=N1.cFn;
+  if(N1.cLn&&!rv('r-ln'))document.getElementById('r-ln').value=N1.cLn;
+  if(N1.cEmail&&!rv('r-email'))document.getElementById('r-email').value=N1.cEmail;
+}
+
+function resetN1(){
+  document.getElementById('n1-succ').style.display='none';n1cur=1;N1={};
+  document.querySelectorAll('#n1-modal .panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('n1p1').classList.add('active');
+  document.getElementById('n1-si').textContent='1';
+  document.getElementById('n1-bar').style.width='14.2%';
+}
+</script>
+
+<!-- ══ IN01 COMPANY FORMATION MODAL ══ -->
+<div id="in01-overlay" onclick="handleIN01Click(event)" style="position:fixed;inset:0;z-index:9999;background:rgba(5,10,20,0);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;transition:background 0.4s;">
+  <div id="in01-modal" style="width:100%;max-width:700px;min-height:100vh;background:var(--ink);display:flex;flex-direction:column;transform:translateY(30px);opacity:0;transition:transform 0.45s cubic-bezier(0.25,0,0,1),opacity 0.35s;">
+
+    <div class="fh">
+      <div class="flogo"><span class="soln">soln</span><span class="law">law</span>&thinsp;<span class="ai">ai</span></div>
+      <div class="fstep">IN01 Company Formation &nbsp;·&nbsp; Step <span id="in01-si">1</span> of 8</div>
+      <button class="fclose" onclick="closeIN01()">✕</button>
+    </div>
+    <div class="fprog"><div class="fbar" id="in01-bar" style="width:12.5%"></div></div>
+
+    <div class="fbody">
+
+      <!-- STEP 1: Company name, type, jurisdiction -->
+      <div class="panel active" id="in01p1">
+        <div class="ey">Part 1 — A1–A3 · Company details</div>
+        <div class="ttl">Your proposed<br><em>company name</em></div>
+        <div class="sub">Choose your company name carefully. Duplicate names are not permitted. Check availability at <strong style="color:var(--gold);">companieshouse.gov.uk/info</strong> before proceeding.</div>
+        <div class="ibox"><strong>Tip:</strong> Most private limited companies end with "Limited" or "Ltd". The name you register must be unique on the Companies House register.</div>
+        <div class="field"><label>A1 — Proposed company name in full <span style="color:var(--gold);">*</span></label><input type="text" id="in01-name" placeholder="e.g. Acme Trading Limited" style="text-transform:uppercase;"><div class="em" id="err-in01-name">Required — enter your full proposed company name</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A2 — Does the name contain sensitive or restricted words?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-namerestrict" data-v="no" onclick="in01pick(this)"><div class="ct">No sensitive words</div></div>
+          <div class="choice" data-g="in01-namerestrict" data-v="yes" onclick="in01pick(this)"><div class="ct">Yes — approval obtained</div><div class="cs">You must attach evidence of approval</div></div>
+        </div>
+        <div class="em" id="err-in01-namerestrict" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A3 — Apply for exemption from "Limited" / "Cyfyngedig"?</div>
+        <div class="choices ch2" style="margin-bottom:8px;">
+          <div class="choice" data-g="in01-limitedexempt" data-v="no" onclick="in01pick(this)"><div class="ct">No exemption</div><div class="cs">Standard company ending</div></div>
+          <div class="choice" data-g="in01-limitedexempt" data-v="yes" onclick="in01pick(this)"><div class="ct">Apply for exemption</div><div class="cs">Charities / guarantee companies only</div></div>
+        </div>
+        <div class="em" id="err-in01-limitedexempt">Required</div>
+        <div class="fnav"><button class="bnx" onclick="in01nxt(1)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 2: Company type, SIC, jurisdiction, registered office -->
+      <div class="panel" id="in01p2">
+        <div class="ey">Part 1 — A4–A7 · Company type & registered office</div>
+        <div class="ttl">Company type<br><em>and jurisdiction</em></div>
+        <div class="sub">Select the type of company you wish to form and where it will be registered. This determines which legal rules apply.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A4 — Company type</div>
+        <div class="choices" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-type" data-v="pvt-shares" onclick="in01pick(this)"><div class="ct">Private limited by shares <span style="font-size:10px;color:var(--gold);margin-left:8px;">Most common</span></div><div class="cs">Shareholders' liability limited to share value. E.g. Ltd companies.</div></div>
+          <div class="choice" data-g="in01-type" data-v="pvt-guarantee" onclick="in01pick(this)"><div class="ct">Private limited by guarantee</div><div class="cs">Members guarantee a fixed amount. Used for charities, clubs, associations.</div></div>
+          <div class="choice" data-g="in01-type" data-v="public-shares" onclick="in01pick(this)"><div class="ct">Public limited by shares (PLC)</div><div class="cs">Can offer shares to the public. Requires minimum £50,000 share capital.</div></div>
+          <div class="choice" data-g="in01-type" data-v="unlimited-share" onclick="in01pick(this)"><div class="ct">Private unlimited with share capital</div><div class="cs">No limit on members' liability.</div></div>
+          <div class="choice" data-g="in01-type" data-v="unlimited-noshare" onclick="in01pick(this)"><div class="ct">Private unlimited without share capital</div></div>
+        </div>
+        <div class="em" id="err-in01-type" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="field"><label>A5 — SIC code(s) or business activity description</label><input type="text" id="in01-sic" placeholder="e.g. 62012 — Business and domestic software development"><div class="em" id="err-in01-sic">Required — enter SIC code or describe your business</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A6 — Registered office jurisdiction</div>
+        <div class="choices" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+          <div class="choice" data-g="in01-juris" data-v="ew" onclick="in01pick(this)"><div class="ct">England and Wales</div></div>
+          <div class="choice" data-g="in01-juris" data-v="wales" onclick="in01pick(this)"><div class="ct">Wales</div></div>
+          <div class="choice" data-g="in01-juris" data-v="scotland" onclick="in01pick(this)"><div class="ct">Scotland</div></div>
+          <div class="choice" data-g="in01-juris" data-v="ni" onclick="in01pick(this)"><div class="ct">Northern Ireland</div></div>
+        </div>
+        <div class="em" id="err-in01-juris" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A7 — Registered office address</div>
+        <div class="field"><label>Building name/number and street</label><input type="text" id="in01-ro-a1" placeholder="Building and street"><div class="em" id="err-in01-ro-a1">Required</div></div>
+        <div class="row2">
+          <div class="field"><label>Post town</label><input type="text" id="in01-ro-town"><div class="em" id="err-in01-ro-town">Required</div></div>
+          <div class="field"><label>County/Region (optional)</label><input type="text" id="in01-ro-county"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Postcode</label><input type="text" id="in01-ro-post" oninput="this.value=this.value.toUpperCase()"><div class="em" id="err-in01-ro-post">Required</div></div>
+          <div class="field"><label>Registered email (A10)</label><input type="email" id="in01-ro-email" placeholder="company@email.com"><div class="em" id="err-in01-ro-email">Valid email required</div></div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="in01bck(2)">← Back</button><button class="bnx" onclick="in01nxt(2)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 3: Articles of association -->
+      <div class="panel" id="in01p3">
+        <div class="ey">Part 1 — A8–A9 · Articles of association</div>
+        <div class="ttl">Articles of<br><em>association</em></div>
+        <div class="sub">The articles of association are the internal rules governing your company. Most private companies use the standard model articles.</div>
+        <div class="ibox"><strong>Model articles</strong> are the default rules set by the government. They are suitable for most private companies and require no solicitor input. You can also add custom provisions or adopt fully bespoke articles.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A8 — Which articles do you wish to adopt?</div>
+        <div class="choices" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-articles" data-v="model-full" onclick="in01pick(this)"><div class="ct">Option 1 — Model articles in full <span style="font-size:10px;color:var(--gold);margin-left:8px;">Recommended</span></div><div class="cs">Adopt the government's standard model articles in their entirety. Suitable for most small private companies.</div></div>
+          <div class="choice" data-g="in01-articles" data-v="model-amended" onclick="in01pick(this)"><div class="ct">Option 2 — Model articles with amendments</div><div class="cs">Adopt model articles with additional or amended provisions. You will need to attach a copy of the amendments.</div></div>
+          <div class="choice" data-g="in01-articles" data-v="bespoke" onclick="in01pick(this)"><div class="ct">Option 3 — Bespoke articles</div><div class="cs">Entirely custom articles. You will need to attach a full copy. Required for CICs.</div></div>
+        </div>
+        <div class="em" id="err-in01-articles" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">A9 — Are the articles restricted (contain entrenchment provisions)?</div>
+        <div class="choices ch2" style="margin-bottom:8px;">
+          <div class="choice" data-g="in01-restricted" data-v="no" onclick="in01pick(this)"><div class="ct">No — standard articles</div></div>
+          <div class="choice" data-g="in01-restricted" data-v="yes" onclick="in01pick(this)"><div class="ct">Yes — restricted articles</div></div>
+        </div>
+        <div class="em" id="err-in01-restricted">Required</div>
+        <div class="fnav"><button class="bbk" onclick="in01bck(3)">← Back</button><button class="bnx" onclick="in01nxt(3)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 4: Director appointment -->
+      <div class="panel" id="in01p4">
+        <div class="ey">Part 2 — D1–D6 · Director appointment</div>
+        <div class="ttl">Appoint your<br><em>first director</em></div>
+        <div class="sub">Every private company must appoint at least one individual director. Directors must have verified their identity with Companies House (s1110A Companies Act 2006).</div>
+        <div class="ibox"><strong>Identity verification required:</strong> All individual directors must verify their identity with Companies House before or at the time of incorporation. You will need a Companies House personal code (11-character code).</div>
+        <div class="row2">
+          <div class="field"><label>Title (optional)</label><select id="in01-d-title"><option value="">Select…</option><option>Mr</option><option>Mrs</option><option>Miss</option><option>Ms</option><option>Dr</option><option>Prof</option><option>Other</option></select></div>
+          <div class="field"><label>Nationality</label><input type="text" id="in01-d-nat" placeholder="e.g. British"><div class="em" id="err-in01-d-nat">Required</div></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Full forename(s)</label><input type="text" id="in01-d-fn" placeholder="Full first name(s)"><div class="em" id="err-in01-d-fn">Required</div></div>
+          <div class="field"><label>Surname</label><input type="text" id="in01-d-ln" placeholder="Surname"><div class="em" id="err-in01-d-ln">Required</div></div>
+        </div>
+        <div class="field"><label>Former name(s) used for business in last 20 years (optional)</label><input type="text" id="in01-d-former" placeholder="Leave blank if none"></div>
+        <div class="row2">
+          <div class="field"><label>Country/State of residence</label><input type="text" id="in01-d-country" placeholder="e.g. England" value="England"><div class="em" id="err-in01-d-country">Required</div></div>
+          <div class="field"><label>Month/Year of birth</label><input type="month" id="in01-d-dob"><div class="em" id="err-in01-d-dob">Required</div></div>
+        </div>
+        <div class="field"><label>Date of birth (full — not shown publicly)</label><input type="date" id="in01-d-dobfull"><div class="em" id="err-in01-d-dobfull">Required</div></div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">D2 — Director's service address (appears on public record)</div>
+        <div class="choices ch2" style="margin-bottom:10px;">
+          <div class="choice" data-g="in01-d-svcaddr" data-v="regoffice" onclick="in01pick(this);document.getElementById('in01-d-svcblock').style.display='none'"><div class="ct">Same as registered office</div></div>
+          <div class="choice" data-g="in01-d-svcaddr" data-v="other" onclick="in01pick(this);document.getElementById('in01-d-svcblock').style.display='block'"><div class="ct">Different address</div></div>
+        </div>
+        <div class="em" id="err-in01-d-svcaddr" style="margin-bottom:10px;">Required</div>
+        <div id="in01-d-svcblock" style="display:none;">
+          <div class="field"><label>Service address — building/street</label><input type="text" id="in01-d-svc-a1"></div>
+          <div class="row2"><div class="field"><label>Town</label><input type="text" id="in01-d-svc-town"></div><div class="field"><label>Postcode</label><input type="text" id="in01-d-svc-post" oninput="this.value=this.value.toUpperCase()"></div></div>
+        </div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">D5–D6 — Identity verification</div>
+        <label class="cbx" id="in01-cb-idv" onclick="in01tglCb('in01-cb-idv','in01-d-idv')"><input type="checkbox" id="in01-d-idv" onchange="in01updCb('in01-cb-idv',this)"><span>I confirm this director has verified their identity in accordance with the Companies Act 2006.</span></label>
+        <div class="em" id="err-in01-d-idv" style="margin-bottom:10px;">Identity verification confirmation is required</div>
+        <div class="field"><label>Companies House personal code (11 characters)</label><input type="text" id="in01-d-chcode" placeholder="e.g. AB1/CD2/EFG34" maxlength="14"><div class="em" id="err-in01-d-chcode">Required — enter the director's Companies House personal code</div></div>
+        <div class="fnav"><button class="bbk" onclick="in01bck(4)">← Back</button><button class="bnx" onclick="in01nxt(4)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 5: Secretary (optional) -->
+      <div class="panel" id="in01p5">
+        <div class="ey">Part 2 — B1–B2 · Company secretary</div>
+        <div class="ttl">Company secretary<br><em>(optional for private companies)</em></div>
+        <div class="sub">Private companies are not required to appoint a company secretary. Public companies must appoint at least one. If you wish to appoint one, please provide their details below.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Do you wish to appoint a company secretary?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-hassec" data-v="no" onclick="in01pick(this);document.getElementById('in01-sec-block').style.display='none'"><div class="ct">No secretary</div><div class="cs">Optional for private companies</div></div>
+          <div class="choice" data-g="in01-hassec" data-v="yes" onclick="in01pick(this);document.getElementById('in01-sec-block').style.display='block'"><div class="ct">Appoint a secretary</div></div>
+        </div>
+        <div class="em" id="err-in01-hassec" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+        <div id="in01-sec-block" style="display:none;">
+          <div class="row2">
+            <div class="field"><label>Secretary title (optional)</label><select id="in01-s-title"><option value="">Select…</option><option>Mr</option><option>Mrs</option><option>Miss</option><option>Ms</option><option>Dr</option></select></div>
+            <div class="field"><label>Full forename(s)</label><input type="text" id="in01-s-fn"></div>
+          </div>
+          <div class="field"><label>Surname</label><input type="text" id="in01-s-ln"></div>
+          <div class="field"><label>Former name(s) in last 20 years (optional)</label><input type="text" id="in01-s-former" placeholder="Leave blank if none"></div>
+          <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">B2 — Secretary's service address</div>
+          <div class="choices ch2" style="margin-bottom:10px;">
+            <div class="choice" data-g="in01-s-svcaddr" data-v="regoffice" onclick="in01pick(this)"><div class="ct">Same as registered office</div></div>
+            <div class="choice" data-g="in01-s-svcaddr" data-v="other" onclick="in01pick(this)"><div class="ct">Different address</div></div>
+          </div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="in01bck(5)">← Back</button><button class="bnx" onclick="in01nxt(5)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 6: Share capital / guarantee -->
+      <div class="panel" id="in01p6">
+        <div class="ey">Part 3 — F1–F3 · Statement of capital</div>
+        <div class="ttl">Share capital<br><em>and shareholdings</em></div>
+        <div class="sub">For companies with share capital, you must state the total shares, their class, nominal value, and the initial shareholders.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">Does your company have share capital?</div>
+        <div class="choices ch2" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-hascap" data-v="yes" onclick="in01pick(this);document.getElementById('in01-cap-block').style.display='block';document.getElementById('in01-guar-block').style.display='none'"><div class="ct">Yes — share capital</div><div class="cs">Most private limited companies</div></div>
+          <div class="choice" data-g="in01-hascap" data-v="no" onclick="in01pick(this);document.getElementById('in01-cap-block').style.display='none';document.getElementById('in01-guar-block').style.display='block'"><div class="ct">No — limited by guarantee</div><div class="cs">Charities, clubs, not-for-profits</div></div>
+        </div>
+        <div class="em" id="err-in01-hascap" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+
+        <div id="in01-cap-block" style="display:none;">
+          <div class="ibox"><strong>Typical setup:</strong> 100 ordinary shares at £0.01 nominal value each = £1.00 total share capital. Most start-ups use this structure.</div>
+          <div class="row2">
+            <div class="field"><label>Share class</label><input type="text" id="in01-share-class" placeholder="Ordinary" value="Ordinary"><div class="em" id="err-in01-share-class">Required</div></div>
+            <div class="field"><label>Number of shares</label><input type="number" id="in01-share-num" placeholder="100" min="1"><div class="em" id="err-in01-share-num">Required</div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Currency</label><select id="in01-share-currency"><option value="GBP">GBP (£)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option></select></div>
+            <div class="field"><label>Nominal value per share</label><input type="number" id="in01-share-nominal" placeholder="0.01" min="0.001" step="0.001"><div class="em" id="err-in01-share-nominal">Required</div></div>
+          </div>
+          <div class="field">
+            <label>F2 — Voting rights / dividend rights description</label>
+            <textarea id="in01-share-rights" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 15px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;outline:none;resize:vertical;min-height:80px;" placeholder="e.g. Each ordinary share carries one vote, equal right to dividends, and equal right to surplus assets on winding up. Shares are not redeemable."></textarea>
+          </div>
+          <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">F3 — Initial shareholder (subscriber 1)</div>
+          <div class="row2">
+            <div class="field"><label>Shareholder name</label><input type="text" id="in01-sh1-name" placeholder="Full name"><div class="em" id="err-in01-sh1-name">Required</div></div>
+            <div class="field"><label>Number of shares</label><input type="number" id="in01-sh1-shares" placeholder="100" min="1"><div class="em" id="err-in01-sh1-shares">Required</div></div>
+          </div>
+          <div class="field"><label>Shareholder address</label><input type="text" id="in01-sh1-addr" placeholder="Address (appears on public record)"><div class="em" id="err-in01-sh1-addr">Required</div></div>
+        </div>
+
+        <div id="in01-guar-block" style="display:none;">
+          <div class="field"><label>G1 — Guarantor forename(s)</label><input type="text" id="in01-g-fn" placeholder="First name(s)"></div>
+          <div class="field"><label>Guarantor surname</label><input type="text" id="in01-g-ln" placeholder="Surname"></div>
+          <div class="field"><label>Guarantor address</label><input type="text" id="in01-g-addr" placeholder="Address (appears on public record)"></div>
+          <div class="field"><label>Amount guaranteed</label><input type="text" id="in01-g-amount" placeholder="e.g. £10"></div>
+        </div>
+
+        <div class="fnav"><button class="bbk" onclick="in01bck(6)">← Back</button><button class="bnx" onclick="in01nxt(6)">Continue →</button></div>
+      </div>
+
+      <!-- STEP 7: PSC + consents + lawful purpose -->
+      <div class="panel" id="in01p7">
+        <div class="ey">Parts 5–8 — H1–H2 · I1–I9 · L1 · M1 · N1</div>
+        <div class="ttl">People with significant<br><em>control (PSC)</em></div>
+        <div class="sub">You must declare anyone with significant control over the company. This is usually anyone owning more than 25% of shares, voting rights, or who can appoint/remove a majority of directors.</div>
+        <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">H1/H2 — PSC statement</div>
+        <div class="choices" style="margin-bottom:14px;">
+          <div class="choice" data-g="in01-psc" data-v="individual" onclick="in01pick(this);document.getElementById('in01-psc-block').style.display='block'"><div class="ct">There will be one or more individual PSCs</div><div class="cs">Complete sections I1–I7 for each individual PSC</div></div>
+          <div class="choice" data-g="in01-psc" data-v="no-psc" onclick="in01pick(this);document.getElementById('in01-psc-block').style.display='none'"><div class="ct">No PSC (H2)</div><div class="cs">Company believes there will be no person with significant control</div></div>
+        </div>
+        <div class="em" id="err-in01-psc" style="margin-top:-8px;margin-bottom:12px;">Required</div>
+
+        <div id="in01-psc-block" style="display:none;">
+          <div class="ibox"><strong>Individual PSC details:</strong> Enter the details of the first person with significant control. Residential address is not shown publicly.</div>
+          <div class="row2">
+            <div class="field"><label>I1 — PSC forename(s)</label><input type="text" id="in01-psc-fn" placeholder="First name(s)"><div class="em" id="err-in01-psc-fn">Required</div></div>
+            <div class="field"><label>PSC surname</label><input type="text" id="in01-psc-ln" placeholder="Surname"><div class="em" id="err-in01-psc-ln">Required</div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Nationality</label><input type="text" id="in01-psc-nat" placeholder="e.g. British" value="British"></div>
+            <div class="field"><label>Month/Year of birth</label><input type="month" id="in01-psc-dob"></div>
+          </div>
+          <div class="field"><label>Country/State of residence</label><input type="text" id="in01-psc-cty" value="England"></div>
+          <div class="flabel" style="display:block;font-size:10.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:7px;">I7 — Nature of control (tick all that apply)</div>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="shares-25-50"><span>Holds more than 25% but not more than 50% of shares</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="shares-50-75"><span>Holds more than 50% but less than 75% of shares</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="shares-75plus"><span>Holds 75% or more of shares</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="votes-25-50"><span>Holds more than 25% but not more than 50% of voting rights</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="votes-50-75"><span>Holds more than 50% but less than 75% of voting rights</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="votes-75plus"><span>Holds 75% or more of voting rights</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="appoint-directors"><span>Right to appoint or remove majority of directors</span></label>
+          <label class="jck"><input type="checkbox" name="in01-psc-ctrl" value="significant-influence"><span>Significant influence or control (only if none of above apply)</span></label>
+          <div class="em" id="err-in01-psc-ctrl" style="margin-top:6px;">Select at least one nature of control</div>
+          <div class="ibox" style="margin-top:14px;"><strong>I5 — PSC identity verification (optional):</strong> If the PSC has verified their identity with Companies House, you may provide their personal code below.</div>
+          <div class="field"><label>PSC Companies House personal code (optional)</label><input type="text" id="in01-psc-code" placeholder="e.g. AB1/CD2/EFG34" maxlength="14"></div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <label class="cbx" id="in01-cb-consent" onclick="in01tglCb('in01-cb-consent','in01-consent')"><input type="checkbox" id="in01-consent" onchange="in01updCb('in01-cb-consent',this)"><span><strong>L1 — Consent to act:</strong> The subscribers confirm that each person named as a director or secretary has consented to act in that capacity.</span></label>
+          <div class="em" id="err-in01-consent" style="margin-bottom:10px;">Required</div>
+          <label class="cbx" id="in01-cb-lawful" onclick="in01tglCb('in01-cb-lawful','in01-lawful')" style="margin-top:8px;"><input type="checkbox" id="in01-lawful" onchange="in01updCb('in01-cb-lawful',this)"><span><strong>N1 — Lawful purpose:</strong> The subscribers wish to form the company for lawful purposes.</span></label>
+          <div class="em" id="err-in01-lawful" style="margin-bottom:10px;">Required</div>
+        </div>
+        <div class="fnav"><button class="bbk" onclick="in01bck(7)">← Back</button><button class="bnx" onclick="in01nxt(7)">Review →</button></div>
+      </div>
+
+      <!-- STEP 8: Review & Statement of Compliance -->
+      <div class="panel" id="in01p8">
+        <div class="ey">Part 9 — P1 · Review & statement of compliance</div>
+        <div class="ttl">Review your<br><em>application</em></div>
+        <div class="sub">Please check all details carefully. The statement of compliance confirms you have met all requirements of the Companies Act 2006.</div>
+        <div id="in01-rev"></div>
+        <div style="margin-top:20px;">
+          <div class="ibox"><strong>P1 — Statement of compliance:</strong> By submitting, you confirm that the requirements of the Companies Act 2006 as to registration have been complied with. Subscriber's printed name is used in lieu of signature.</div>
+        </div>
+        <div class="field" style="margin-top:14px;"><label>Subscriber's name (printed) — P1</label><input type="text" id="in01-subscriber" placeholder="Your full name"><div class="em" id="err-in01-subscriber">Required</div></div>
+        <button class="bsub" onclick="submitIN01()" style="margin-top:8px;">Submit IN01 Application →</button>
+        <div class="fnav" style="margin-top:16px;justify-content:flex-start;"><button class="bbk" onclick="in01bck(8)">← Edit answers</button></div>
+      </div>
+
+      <!-- IN01 SUCCESS -->
+      <div id="in01-succ" style="display:none;text-align:center;padding:80px 20px;">
+        <div style="width:52px;height:52px;border:1.5px solid rgba(245,200,66,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><svg width="20" height="20" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:#fff;margin-bottom:14px;">Application submitted</div>
+        <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.8;max-width:420px;margin:0 auto 32px;">Your IN01 company formation application has been received. The solnlaw ai team will prepare your full application and Memorandum of Association and be in touch within 24 hours.</div>
+        <button style="background:transparent;border:1px solid rgba(245,200,66,0.3);color:var(--gold);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-right:10px;" onclick="closeIN01()">← Back to services</button>
+        <button style="background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);padding:11px 28px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;" onclick="resetIN01()">New application</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   IN01 COMPANY FORMATION LOGIC
+════════════════════════════════════════ */
+var in01Overlay=document.getElementById('in01-overlay');
+var in01cur=1,in01tot=8,IN01D={};
+
+function openIN01(){
+  in01Overlay.style.display='flex';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    in01Overlay.style.background='rgba(5,10,20,0.97)';
+    document.getElementById('in01-modal').style.transform='translateY(0)';
+    document.getElementById('in01-modal').style.opacity='1';
+  });});
+  document.body.style.overflow='hidden';
+}
+function closeIN01(){
+  in01Overlay.style.background='rgba(5,10,20,0)';
+  document.getElementById('in01-modal').style.transform='translateY(30px)';
+  document.getElementById('in01-modal').style.opacity='0';
+  setTimeout(function(){in01Overlay.style.display='none';document.body.style.overflow='';},400);
+}
+function handleIN01Click(e){if(e.target===in01Overlay)closeIN01();}
+
+function in01pick(el){
+  var g=el.getAttribute('data-g');
+  document.querySelectorAll('[data-g="'+g+'"]').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');IN01D[g]=el.getAttribute('data-v');
+  var err=document.getElementById('err-'+g);if(err)err.classList.remove('on');
+}
+function in01tglCb(bId,cId){var c=document.getElementById(cId);c.checked=!c.checked;in01updCb(bId,c);}
+function in01updCb(bId,c){document.getElementById(bId).classList.toggle('on',c.checked);if(c.checked){var e=document.getElementById('err-'+c.id);if(e)e.classList.remove('on');}}
+function i1v(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function i1req(id,eid){var ok=!!i1v(id);var el=document.getElementById(id);if(el)el.classList.toggle('ERR',!ok);var em=document.getElementById(eid);if(em)em.classList.toggle('on',!ok);return ok;}
+function i1reqSel(g){var ok=!!IN01D[g];var e=document.getElementById('err-'+g);if(e)e.classList.toggle('on',!ok);return ok;}
+
+function in01validate(n){
+  var ok=true;
+  if(n===1){ok=i1req('in01-name','err-in01-name')&i1reqSel('in01-namerestrict')&i1reqSel('in01-limitedexempt')&&ok;}
+  if(n===2){ok=i1reqSel('in01-type')&i1req('in01-sic','err-in01-sic')&i1reqSel('in01-juris')&i1req('in01-ro-a1','err-in01-ro-a1')&i1req('in01-ro-town','err-in01-ro-town')&i1req('in01-ro-post','err-in01-ro-post')&&ok;var em=i1v('in01-ro-email');var eok=em&&/^[^@]+@[^@]+\.[^@]+$/.test(em);document.getElementById('in01-ro-email').classList.toggle('ERR',!eok);document.getElementById('err-in01-ro-email').classList.toggle('on',!eok);if(!eok)ok=false;}
+  if(n===3){ok=i1reqSel('in01-articles')&i1reqSel('in01-restricted')&&ok;}
+  if(n===4){ok=i1req('in01-d-fn','err-in01-d-fn')&i1req('in01-d-ln','err-in01-d-ln')&i1req('in01-d-nat','err-in01-d-nat')&i1req('in01-d-country','err-in01-d-country')&i1req('in01-d-dob','err-in01-d-dob')&i1req('in01-d-dobfull','err-in01-d-dobfull')&i1reqSel('in01-d-svcaddr')&&ok;var idv=document.getElementById('in01-d-idv').checked;document.getElementById('in01-cb-idv').style.borderColor=idv?'rgba(245,200,66,0.5)':'';var idem=document.getElementById('err-in01-d-idv');if(idem)idem.classList.toggle('on',!idv);if(!idv)ok=false;ok=i1req('in01-d-chcode','err-in01-d-chcode')&&ok;}
+  if(n===5){ok=i1reqSel('in01-hassec')&&ok;}
+  if(n===6){
+    ok=i1reqSel('in01-hascap')&&ok;
+    if(IN01D['in01-hascap']==='yes'){ok=i1req('in01-share-class','err-in01-share-class')&i1req('in01-share-num','err-in01-share-num')&i1req('in01-share-nominal','err-in01-share-nominal')&i1req('in01-sh1-name','err-in01-sh1-name')&i1req('in01-sh1-shares','err-in01-sh1-shares')&i1req('in01-sh1-addr','err-in01-sh1-addr')&&ok;}
+  }
+  if(n===7){
+    ok=i1reqSel('in01-psc')&&ok;
+    if(IN01D['in01-psc']==='individual'){ok=i1req('in01-psc-fn','err-in01-psc-fn')&i1req('in01-psc-ln','err-in01-psc-ln')&&ok;var ctrls=document.querySelectorAll('[name="in01-psc-ctrl"]:checked').length>0;var ctrlEm=document.getElementById('err-in01-psc-ctrl');if(ctrlEm)ctrlEm.classList.toggle('on',!ctrls);if(!ctrls)ok=false;}
+    var con=document.getElementById('in01-consent').checked;var conEm=document.getElementById('err-in01-consent');if(conEm)conEm.classList.toggle('on',!con);if(!con)ok=false;
+    var law=document.getElementById('in01-lawful').checked;var lawEm=document.getElementById('err-in01-lawful');if(lawEm)lawEm.classList.toggle('on',!law);if(!law)ok=false;
+  }
+  if(n===8){ok=i1req('in01-subscriber','err-in01-subscriber')&&ok;}
+  return !!ok;
+}
+
+function in01save(n){
+  if(n===1){IN01D.compName=i1v('in01-name');}
+  if(n===2){IN01D.sic=i1v('in01-sic');IN01D.roAddr=i1v('in01-ro-a1')+', '+i1v('in01-ro-town')+' '+i1v('in01-ro-post');IN01D.roEmail=i1v('in01-ro-email');}
+  if(n===4){IN01D.dirName=i1v('in01-d-fn')+' '+i1v('in01-d-ln');IN01D.dirDob=i1v('in01-d-dobfull');IN01D.dirCode=i1v('in01-d-chcode');}
+  if(n===6){IN01D.shareClass=i1v('in01-share-class');IN01D.shareNum=i1v('in01-share-num');IN01D.sh1Name=i1v('in01-sh1-name');}
+  if(n===7){IN01D.pscName=i1v('in01-psc-fn')+' '+i1v('in01-psc-ln');IN01D.pscCtrl=Array.from(document.querySelectorAll('[name="in01-psc-ctrl"]:checked')).map(function(c){return c.value;}).join(', ');}
+  if(n===8){IN01D.subscriber=i1v('in01-subscriber');}
+}
+
+function in01nxt(n){
+  if(!in01validate(n))return;
+  in01save(n);
+  if(n===7)in01buildReview();
+  in01goStep(n+1);
+}
+function in01bck(n){in01goStep(n-1);}
+function in01goStep(n){
+  document.getElementById('in01p'+in01cur).classList.remove('active');in01cur=n;
+  document.getElementById('in01p'+in01cur).classList.add('active');
+  document.getElementById('in01-si').textContent=n;
+  document.getElementById('in01-bar').style.width=(n/in01tot*100)+'%';
+  document.getElementById('in01-modal').scrollTop=0;
+}
+
+var IN01FM={
+  'in01-namerestrict':{no:'No sensitive words',yes:'Yes — approval obtained'},
+  'in01-limitedexempt':{no:'No exemption required',yes:'Exemption applied for'},
+  'in01-type':{'pvt-shares':'Private limited by shares','pvt-guarantee':'Private limited by guarantee','public-shares':'Public limited by shares (PLC)','unlimited-share':'Private unlimited with share capital','unlimited-noshare':'Private unlimited without share capital'},
+  'in01-juris':{ew:'England and Wales',wales:'Wales',scotland:'Scotland',ni:'Northern Ireland'},
+  'in01-articles':{'model-full':'Model articles in full (Option 1)','model-amended':'Model articles with amendments (Option 2)','bespoke':'Bespoke articles (Option 3)'},
+  'in01-restricted':{no:'No',yes:'Yes — restricted articles'},
+  'in01-hassec':{no:'No secretary appointed',yes:'Secretary appointed'},
+  'in01-hascap':{yes:'Share capital',no:'Limited by guarantee'},
+  'in01-psc':{'individual':'Individual PSC(s)','no-psc':'No PSC (H2)'},
+  'in01-d-svcaddr':{'regoffice':'Same as registered office','other':'Different address'},
+};
+function i1fmt(g,v){return(IN01FM[g]&&IN01FM[g][v])||v||'—';}
+function i1rr(k,v){return '<div class="rev-row"><div class="rk">'+k+'</div><div class="rv">'+(v||'—')+'</div></div>';}
+function i1rs(t,rows){return '<div class="rev-sec"><div class="rev-lbl">'+t+'</div>'+rows.join('')+'</div>';}
+
+function in01buildReview(){
+  var h='';
+  h+=i1rs('Company details',[i1rr('Proposed name',IN01D.compName||'—'),i1rr('Name restrictions',i1fmt('in01-namerestrict',IN01D['in01-namerestrict'])),i1rr('Limited exemption',i1fmt('in01-limitedexempt',IN01D['in01-limitedexempt'])),i1rr('Company type',i1fmt('in01-type',IN01D['in01-type'])),i1rr('SIC / Activity',IN01D.sic||'—'),i1rr('Jurisdiction',i1fmt('in01-juris',IN01D['in01-juris'])),i1rr('Registered office',IN01D.roAddr||'—'),i1rr('Registered email',IN01D.roEmail||'—')]);
+  h+=i1rs('Articles of association',[i1rr('Articles option',i1fmt('in01-articles',IN01D['in01-articles'])),i1rr('Restricted articles',i1fmt('in01-restricted',IN01D['in01-restricted']))]);
+  h+=i1rs('Director (D1–D6)',[i1rr('Name',IN01D.dirName||'—'),i1rr('Date of birth',IN01D.dirDob||'—'),i1rr('Service address',i1fmt('in01-d-svcaddr',IN01D['in01-d-svcaddr'])),i1rr('Identity verified','Yes'),i1rr('Companies House code',IN01D.dirCode||'—')]);
+  h+=i1rs('Secretary',[i1rr('Appointment',i1fmt('in01-hassec',IN01D['in01-hassec']))]);
+  if(IN01D['in01-hascap']==='yes'){h+=i1rs('Share capital (F1–F3)',[i1rr('Class',IN01D.shareClass||'—'),i1rr('Number of shares',IN01D.shareNum||'—'),i1rr('Initial shareholder',IN01D.sh1Name||'—')]);}
+  else{h+=i1rs('Statement of guarantee',[i1rr('Type','Limited by guarantee')]);}
+  h+=i1rs('PSC (Part 5)',[i1rr('PSC statement',i1fmt('in01-psc',IN01D['in01-psc'])),i1rr('PSC name',IN01D.pscName||'—'),i1rr('Nature of control',IN01D.pscCtrl||'—')]);
+  h+=i1rs('Consents',[i1rr('Consent to act (L1)','Confirmed'),i1rr('Lawful purpose (N1)','Confirmed')]);
+  document.getElementById('in01-rev').innerHTML=h;
+}
+
+function submitIN01(){
+  if(!in01validate(8))return;
+  document.querySelectorAll('#in01-modal .panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('in01-succ').style.display='block';
+  document.getElementById('in01-bar').style.width='100%';
+  document.getElementById('in01-si').textContent='✓';
+  /* Pre-fill registration with director details */
+  var fn=i1v('in01-d-fn'),ln=i1v('in01-d-ln'),em=i1v('in01-ro-email');
+  if(fn&&!rv('r-fn'))document.getElementById('r-fn').value=fn;
+  if(ln&&!rv('r-ln'))document.getElementById('r-ln').value=ln;
+  if(em&&!rv('r-email'))document.getElementById('r-email').value=em;
+}
+
+function resetIN01(){
+  document.getElementById('in01-succ').style.display='none';in01cur=1;IN01D={};
+  document.querySelectorAll('#in01-modal .panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('in01p1').classList.add('active');
+  document.getElementById('in01-si').textContent='1';
+  document.getElementById('in01-bar').style.width='12.5%';
+}
+
+/* ════════════════════════════════════════
+   PORTAL LOGIN MODAL
+════════════════════════════════════════ */
+function openPortalLogin(){
+  document.getElementById('portal-login-overlay').style.display='flex';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    document.getElementById('portal-login-overlay').style.background='rgba(5,10,20,0.97)';
+    document.getElementById('portal-login-modal').style.transform='translateY(0)';
+    document.getElementById('portal-login-modal').style.opacity='1';
+  });});
+  document.body.style.overflow='hidden';
+}
+function closePortalLogin(){
+  var o=document.getElementById('portal-login-overlay');
+  o.style.background='rgba(5,10,20,0)';
+  document.getElementById('portal-login-modal').style.transform='translateY(30px)';
+  document.getElementById('portal-login-modal').style.opacity='0';
+  setTimeout(function(){o.style.display='none';document.body.style.overflow='';},400);
+}
+function submitPortalLogin(){
+  var email=document.getElementById('pl-email').value.trim();
+  var pw=document.getElementById('pl-pw').value.trim();
+  if(!email||!pw){document.getElementById('pl-error').style.display='block';return;}
+  document.getElementById('pl-error').style.display='none';
+  // Navigate to portal — pass email as query param so portal can pre-fill name
+  window.location.href='solnlaw-portal.html?demo=1&email='+encodeURIComponent(email);
+}
+
+/* ════════════════════════════════════════
+   THEME TOGGLE
+════════════════════════════════════════ */
+var lmActive=false;
+function toggleTheme(){
+  lmActive=!lmActive;
+  document.body.classList.toggle('lm',lmActive);
+  var fab=document.getElementById('theme-fab');
+  fab.setAttribute('data-tip',lmActive?'Switch to dark mode':'Switch to light mode');
+  try{localStorage.setItem('slw-form-theme',lmActive?'light':'dark');}catch(e){}
+}
+/* Restore saved preference */
+try{if(localStorage.getItem('slw-form-theme')==='light'){lmActive=true;document.body.classList.add('lm');}}catch(e){}
+</script>
+
+
+<!-- ══ PORTAL LOGIN MODAL ══ -->
+<div id="portal-login-overlay" onclick="if(event.target===this)closePortalLogin()" style="position:fixed;inset:0;z-index:9998;background:rgba(5,10,20,0);display:none;align-items:center;justify-content:center;transition:background 0.4s;">
+  <div id="portal-login-modal" style="width:100%;max-width:420px;background:var(--ink);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:0;transform:translateY(30px);opacity:0;transition:transform 0.4s cubic-bezier(0.25,0,0,1),opacity 0.3s;overflow:hidden;">
+    <!-- header -->
+    <div style="padding:20px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:16px;font-weight:300;"><span style="color:#fff;">soln</span><span style="color:var(--gold);">law</span><span style="color:rgba(255,255,255,0.3);font-weight:200;"> ai</span></div>
+        <div style="font-size:9px;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:3px;">Client portal sign in</div>
+      </div>
+      <button onclick="closePortalLogin()" style="background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">✕</button>
+    </div>
+    <!-- body -->
+    <div style="padding:24px 28px 28px;">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:#fff;margin-bottom:6px;">Welcome back</div>
+      <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);margin-bottom:22px;line-height:1.6;">Sign in to access your case, documents and legal team.</div>
+      <!-- error -->
+      <div id="pl-error" style="display:none;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.25);border-radius:7px;padding:10px 14px;font-size:12px;color:rgba(231,76,60,0.9);margin-bottom:14px;">Please enter your email and password.</div>
+      <!-- fields -->
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:10px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;">Email address</label>
+        <input type="email" id="pl-email" placeholder="your@email.com" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(245,200,66,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" onkeydown="if(event.key==='Enter')submitPortalLogin()">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="display:block;font-size:10px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;">Password</label>
+        <input type="password" id="pl-pw" placeholder="••••••••" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(245,200,66,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" onkeydown="if(event.key==='Enter')submitPortalLogin()">
+      </div>
+      <button onclick="submitPortalLogin()" style="width:100%;background:#f5c842;color:#0a1628;border:none;padding:13px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-bottom:14px;" onmouseover="this.style.background='#e6b820'" onmouseout="this.style.background='#f5c842'">Sign in to portal →</button>
+      <!-- demo bypass -->
+      <div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.25);">Demo? <span onclick="window.location.href='solnlaw-portal.html?demo=1'" style="color:var(--gold);cursor:pointer;">Enter portal directly →</span></div>
+      <div style="margin-top:12px;text-align:center;font-size:12px;color:rgba(255,255,255,0.25);">Don't have an account? <span onclick="closePortalLogin();openReg('full')" style="color:var(--gold);cursor:pointer;">Register now</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ THEME TOGGLE FAB ══ -->
+<button id="theme-fab" onclick="toggleTheme()" data-tip="Switch to light mode" aria-label="Toggle theme">
+  <!-- Moon: shown in dark mode -->
+  <svg class="fab-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <!-- Sun: shown in light mode -->
+  <svg class="fab-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+</body>
+</html>
